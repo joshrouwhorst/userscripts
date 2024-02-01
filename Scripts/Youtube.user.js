@@ -6,24 +6,25 @@
 // @author       Josh
 // @match        *://*.youtube.com/*
 // @icon         https://www.youtube.com/s/desktop/54055272/img/favicon.ico
-// @require      https://gist.githubusercontent.com/joshrouwhorst/fb11833b2cdbb4460f9ea3ae0a1b6d06/raw/216858100c067c0675cfe7851fbba3dbfbffdea7/utils.js
+// @require      https://gist.githubusercontent.com/joshrouwhorst/fb11833b2cdbb4460f9ea3ae0a1b6d06/raw/utils.js
 // @require      https://code.jquery.com/jquery-3.7.1.min.js
 // ==/UserScript==
 
 //debugger
 
-const { Log, Err, Obj } = Utils
+const { Log, Err, Obj, OnLocationChange } = Utils
 const LOOP_TIME = 500
 const MAX_TRIES = 10
 
 $(() => {
-  if (window.location.pathname.toLowerCase().includes('/watch')) {
+  OnLocationChange(() => {
+    if (!window.location.pathname.toLowerCase().includes('/watch')) return
     hideChat()
     hideComments()
     closeAds()
     autoSkip()
     showDescription()
-  }
+  })
 })
 
 function hideChat() {
@@ -48,9 +49,15 @@ function hideComments() {
 
     const hideCommentsState = localStorage.getItem('show.comments') !== 'true'
     const btnText = hideCommentsState ? 'Show Comments' : 'Hide Comments'
-    const toggleCommentBtn = $(
-      `<button style="font-weight: bold; padding: 10px; background-color: yellow; color: black; border: 2px solid black; font-size: 1.5em;">${btnText}</button>`
-    )
+
+    const toggleCommentBtn = $(`<button>${btnText}</button>`).css({
+      'font-weight': 'bold',
+      padding: '10px',
+      'background-color': 'yellow',
+      color: 'black',
+      border: '2px solid black',
+      'font-size': '1.5em',
+    })
 
     toggleCommentBtn.click(() => {
       if ($('#comments').is(':visible')) {
