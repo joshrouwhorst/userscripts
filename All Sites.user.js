@@ -13,6 +13,7 @@
 
 // To get rid of cookie banners, add selector here
 const COOKIE_BANNER_SELECTORS = [
+  '#CybotCookiebotDialog',
   '#onetrust-consent-sdk',
   '.c-cookie-banner',
   '.js-consent-banner',
@@ -57,6 +58,11 @@ function siteInfo() {
     _url: window.location.href,
     charset: null,
     links: {},
+    scripts: {
+      head: $('head script').get(),
+      body: $('body script').get(),
+    },
+    styles: $('style').get(),
     meta: {},
     openGraph: {},
     twitter: {},

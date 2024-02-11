@@ -13,19 +13,8 @@
 
 const LOOP_TIME = 500
 
-const { Log, Err, Obj } = Utils
+const { RemoveAds } = Utils
 
 $(() => {
-  hideAds()
+  RemoveAds(['#mainbar iframe', '#sidebar iframe'])
 })
-
-function hideAds() {
-  try {
-    $('#mainbar iframe').hide()
-    $('#sidebar iframe').hide()
-    setTimeout(() => hideAds(), LOOP_TIME)
-  } catch (err) {
-    Err('Error hiding ads')
-    Obj(err)
-  }
-}

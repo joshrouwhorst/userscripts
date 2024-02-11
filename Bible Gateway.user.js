@@ -17,6 +17,9 @@ try {
 
   const LOOP_TIME = 500
   const AD_SELECTORS = [
+    '.sys-announce-content',
+    '.sys-announce',
+    '.bg-popup-root',
     '.passage-bottom-ad',
     '.sponsor-ad',
     '.bottom-ad',
@@ -27,6 +30,7 @@ try {
   ]
 
   $(() => {
+    Log('Bible Gateway User Script Running...')
     $('.resources').hide()
     const mode = localStorage.getItem('mode')
 

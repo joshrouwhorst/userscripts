@@ -10,22 +10,28 @@
 // @require      https://code.jquery.com/jquery-3.7.1.min.js
 // ==/UserScript==
 
-//debugger
+debugger
 
 const { Log, Err, Obj, OnLocationChange } = Utils
 const LOOP_TIME = 500
 const MAX_TRIES = 10
 
 $(() => {
-  OnLocationChange(() => {
-    if (!window.location.pathname.toLowerCase().includes('/watch')) return
-    hideChat()
-    hideComments()
-    closeAds()
-    autoSkip()
-    showDescription()
-  })
+  Log('YouTube User Script Running...')
+  run()
+  OnLocationChange(() => run())
 })
+
+function run() {
+  if (!window.location.pathname.toLowerCase().includes('/watch'))
+    return Log('Not on a video page')
+
+  hideChat()
+  hideComments()
+  closeAds()
+  autoSkip()
+  showDescription()
+}
 
 function hideChat() {
   try {
@@ -41,7 +47,12 @@ function hideChat() {
 
 function hideComments() {
   try {
+    if ($('#toggleCommentsBtn').length > 0) return Log('Button already exists')
+
+    //Log('Started hiding comments')
+
     if ($('#comments').length === 0 || !$('#comments').is(':visible')) {
+      //Log('Comments not found or not visible')
       return setTimeout(() => hideComments(), LOOP_TIME)
     }
 
@@ -50,7 +61,9 @@ function hideComments() {
     const hideCommentsState = localStorage.getItem('show.comments') !== 'true'
     const btnText = hideCommentsState ? 'Show Comments' : 'Hide Comments'
 
-    const toggleCommentBtn = $(`<button>${btnText}</button>`).css({
+    const toggleCommentBtn = $(
+      `<button id="toggleCommentsBtn">${btnText}</button>`
+    ).css({
       'font-weight': 'bold',
       padding: '10px',
       'background-color': 'yellow',
@@ -130,7 +143,15 @@ function autoSkip() {
 
 function showDescription() {
   try {
-    $('#description tp-yt-paper-button#expand').trigger('click')
+    // Before I put in the if statement here the script was causing
+    // the video settings to close every time it triggered
+    if (
+      $('#description tp-yt-paper-button#expand').length > 0 &&
+      $('#description-inline-expander[is-expanded]').length === 0
+    ) {
+      $('#description tp-yt-paper-button#expand').trigger('click')
+    }
+
     setTimeout(() => showDescription(), LOOP_TIME)
   } catch (err) {
     Err('Error running YouTube Show Description')
