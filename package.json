@@ -1,0 +1,11 @@
+{
+  "name": "safari-userscripts",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "push": "git add -A && git commit -m 'update' && git push"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
