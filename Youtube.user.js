@@ -10,11 +10,11 @@
 // @require      https://code.jquery.com/jquery-3.7.1.min.js
 // ==/UserScript==
 
-debugger
-
 const { Log, Err, Obj, OnLocationChange } = Utils
 const LOOP_TIME = 500
 const MAX_TRIES = 10
+const MAX_SECONDS = 10
+const LOAD_START = new Date()
 
 $(() => {
   Log('YouTube User Script Running...')
@@ -38,7 +38,9 @@ function hideChat() {
     $(
       '#chat-container button[aria-label="Hide chat replay"], #chat-container button[aria-label="Hide chat"]'
     ).trigger('click')
-    setTimeout(() => hideChat(), LOOP_TIME)
+
+    if (new Date() - LOAD_START < MAX_SECONDS * 1000)
+      setTimeout(() => hideChat(), LOOP_TIME)
   } catch (err) {
     Err('Error running YouTube Chat Collapse')
     Obj(err)
@@ -134,7 +136,9 @@ function autoSkip() {
       Log('Auto Skipping')
       $('.ytp-ad-skip-button-text').trigger('click')
     }
-    setTimeout(() => autoSkip(), LOOP_TIME)
+
+    if (new Date() - LOAD_START < MAX_SECONDS * 1000)
+      setTimeout(() => autoSkip(), LOOP_TIME)
   } catch (err) {
     Err('Error running YouTube AutoSkip')
     Obj(err)
@@ -152,7 +156,8 @@ function showDescription() {
       $('#description tp-yt-paper-button#expand').trigger('click')
     }
 
-    setTimeout(() => showDescription(), LOOP_TIME)
+    if (new Date() - LOAD_START < MAX_SECONDS * 1000)
+      setTimeout(() => showDescription(), LOOP_TIME)
   } catch (err) {
     Err('Error running YouTube Show Description')
     Obj(err)

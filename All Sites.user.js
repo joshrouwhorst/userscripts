@@ -9,8 +9,6 @@
 // @require      https://code.jquery.com/jquery-3.7.1.min.js
 // ==/UserScript==
 
-//debugger
-
 // To get rid of cookie banners, add selector here
 const COOKIE_BANNER_SELECTORS = [
   '#CybotCookiebotDialog',

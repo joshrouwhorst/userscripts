@@ -11,8 +11,6 @@
 // ==/UserScript==
 
 try {
-  debugger
-
   const { Log, Obj, RemoveAds } = Utils
 
   const LOOP_TIME = 500

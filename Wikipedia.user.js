@@ -10,8 +10,6 @@
 // @require      https://code.jquery.com/jquery-3.7.1.min.js
 // ==/UserScript==
 
-//debugger
-
 let mode = localStorage.getItem('mode')
 const btnStyle =
   'display: inline-block; padding: 5px; border: none; background-color: transparent; color: blue; text-decoration: underline; cursor: pointer;'

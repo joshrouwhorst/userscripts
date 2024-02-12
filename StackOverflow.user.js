@@ -9,8 +9,6 @@
 // @require      https://code.jquery.com/jquery-3.7.1.min.js
 // ==/UserScript==
 
-//debugger
-
 const LOOP_TIME = 500
 
 const { RemoveAds } = Utils
