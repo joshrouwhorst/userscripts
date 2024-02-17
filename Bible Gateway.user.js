@@ -6,7 +6,7 @@
 // @author       Josh
 // @match        *://*.biblegateway.com/passage/*
 // @icon         https://biblegateway.com/favicon.ico
-// @require      https://gist.githubusercontent.com/joshrouwhorst/fb11833b2cdbb4460f9ea3ae0a1b6d06/raw/utils.js?nonce=321
+// @require      https://raw.githubusercontent.com/joshrouwhorst/userscripts/main/Utils.js
 // @require      https://code.jquery.com/jquery-3.7.1.min.js
 // ==/UserScript==
 
