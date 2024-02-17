@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         IMDB
 // @namespace    https://joshr.work/
-// @version      1.0.2
+// @version      1.0.3
 // @author       Josh Rouwhorst
 // @match        *://*.imdb.com/*
 // @require      https://raw.githubusercontent.com/joshrouwhorst/userscripts/main/Utils.js

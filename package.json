@@ -1,9 +1,10 @@
 {
   "name": "safari-userscripts",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "",
   "scripts": {
-    "push": "git add -A && git commit -m 'update' && git push"
+    "set-version": "node ./scripts/versioner.js",
+    "push": "npm run set-version && git add -A && git commit -m 'update' && git push"
   },
   "keywords": [],
   "author": "",
