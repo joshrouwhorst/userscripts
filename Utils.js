@@ -277,7 +277,7 @@ const jk_Utils = {
         const body = document.querySelector('body')
         const observer = new MutationObserver((mutations) => {
           if (oldHref !== document.location.href) {
-            Utils.Log(`Location Change: ${document.location.href}`)
+            jk_Utils.Log(`Location Change: ${document.location.href}`)
             oldHref = document.location.href
             func(document.location.href)
           }
@@ -287,8 +287,8 @@ const jk_Utils = {
 
       window.onload = observeUrlChange
     } catch (err) {
-      Utils.Err('Error observing location change')
-      Utils.Obj(err)
+      jk_Utils.Err('Error observing location change')
+      jk_Utils.Obj(err)
     }
 
     func(document.location.href)
@@ -300,6 +300,6 @@ const jk_Utils = {
       else if ($(selector).length > 0) $(selector).remove()
     })
 
-    setTimeout(() => Utils.RemoveAds(selectors, loopTime), loopTime)
+    setTimeout(() => jk_Utils.RemoveAds(selectors, loopTime), loopTime)
   },
 }
