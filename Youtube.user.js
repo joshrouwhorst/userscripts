@@ -2,7 +2,7 @@
 // @name         Youtube
 // @namespace    https://joshr.work/
 // @homepageURL  https://joshr.work/
-// @version      1.0.36
+// @version      1.0.37
 // @author       Josh
 // @match        *://*.youtube.com/*
 // @icon         https://www.youtube.com/s/desktop/54055272/img/favicon.ico
@@ -68,7 +68,10 @@ function hideComments() {
 
     //Log('Started hiding comments')
 
-    if ($('#comments').length === 0 || !Is($('#comments'), ':visible')) {
+    if (
+      $('#comments').length === 0 ||
+      !$('#comments')[0].style.display !== 'none'
+    ) {
       //Log('Comments not found or not visible')
       return setTimeout(() => hideComments(), LOOP_TIME)
     }
