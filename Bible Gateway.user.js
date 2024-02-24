@@ -2,7 +2,7 @@
 // @name         Bible Gateway
 // @namespace    https://joshr.work/
 // @homepageURL  https://joshr.work/
-// @version      1.0.11
+// @version      1.0.12
 // @author       Josh
 // @match        *://*.biblegateway.com/passage/*
 // @icon         https://biblegateway.com/favicon.ico
@@ -47,29 +47,29 @@ try {
   })
 
   function stripText() {
-    $('sup.footnote').each((idx, item) => {
+    $('sup.footnote').each((item) => {
       $(item).remove()
     })
 
-    $('sup.versenum').each((idx, item) => {
+    $('sup.versenum').each((item) => {
       $(item).remove()
     })
 
-    $('span.chapternum').each((idx, item) => {
+    $('span.chapternum').each((item) => {
       $(item).remove()
     })
   }
 
   function convertToQuote() {
-    $('sup.footnote').each((idx, item) => {
+    $('sup.footnote').each((item) => {
       $(item).remove()
     })
 
-    $('sup.versenum').each((idx, item) => {
+    $('sup.versenum').each((item) => {
       $(item).remove()
     })
 
-    $('span.chapternum').each((idx, item) => {
+    $('span.chapternum').each((item) => {
       $(item).remove()
     })
 
@@ -87,17 +87,17 @@ try {
       })</div>`
     )
 
-    $('sup.footnote').each((idx, item) => {
+    $('sup.footnote').each((item) => {
       const text = $(item).text().trim()
       $(item).replaceWith('**^** ')
     })
 
-    $('sup.versenum').each((idx, item) => {
+    $('sup.versenum').each((item) => {
       const text = $(item).text().trim()
       $(item).replaceWith(`*${text}* `)
     })
 
-    $('span.chapternum').each((idx, item) => {
+    $('span.chapternum').each((item) => {
       const text = $(item).text().trim()
       $(item).replaceWith(`**${text}** `)
     })
@@ -141,7 +141,7 @@ try {
       const val = $('#translation-search').val().toLowerCase()
       if (val === '') $('.translation .r-dropdown ul li').show()
       else {
-        $('.translation .r-dropdown ul li').each((idx, item) => {
+        $('.translation .r-dropdown ul li').each((item) => {
           const text = $(item).text().toLowerCase()
           if (text.includes(val)) {
             $(item).show()
