@@ -6,7 +6,15 @@ function JackKnife(selector) {
   if (selector instanceof HTMLElement) {
     $ = [selector]
   } else if (typeof selector === 'string') {
-    $ = document.querySelectorAll(selector)
+    if (selector.indexOf('<') === 0) {
+      // HTML string
+      const temp = document.createElement('div')
+      temp.innerHTML = selector
+      $ = [temp.firstChild]
+    } else {
+      // Actual Selector
+      $ = document.querySelectorAll(selector)
+    }
   } else if (selector instanceof NodeList) {
     $ = Array.from(selector)
   } else if (selector instanceof Array) {
