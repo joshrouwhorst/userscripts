@@ -1,273 +1,198 @@
-class JackKnife {
-  constructor(selector) {
-    if (!selector) return
+function JackKnife(selector) {
+  if (!selector) return
 
-    let $
+  let $
 
-    if (selector instanceof HTMLElement) {
-      $ = [selector]
-    } else if (typeof selector === 'string') {
-      $ = document.querySelectorAll(selector)
-    } else if (selector instanceof NodeList) {
-      $ = Array.from(selector)
-    } else if (selector instanceof Array) {
-      $ = selector
-    } else if (selector instanceof JackKnife) {
-      return selector
-    } else if (typeof selector === 'function') {
-      return document.addEventListener('DOMContentLoaded', selector)
-    }
+  if (selector instanceof HTMLElement) {
+    $ = [selector]
+  } else if (typeof selector === 'string') {
+    $ = document.querySelectorAll(selector)
+  } else if (selector instanceof NodeList) {
+    $ = Array.from(selector)
+  } else if (selector instanceof Array) {
+    $ = selector
+  } else if (selector instanceof JackKnife) {
+    return selector
+  } else if (typeof selector === 'function') {
+    return document.addEventListener('DOMContentLoaded', selector)
+  }
 
-    if ($.length < 1) return
+  if ($.length < 1) return
 
-    this._meta = {
+  return {
+    length: $.length,
+    _meta: {
       selectors: $,
-    }
-  }
+    },
+    first() {
+      return JackKnife($[0])
+    },
+    last() {
+      return JackKnife($[$.length - 1])
+    },
+    get(index) {
+      if (index === undefined) return $[0]
+      return $[index]
+    },
+    remove() {
+      $.forEach((elem) => elem.remove())
+    },
+    attr(name, value) {
+      if (value === undefined) return $[0].getAttribute(name)
+      $.forEach((elem) => elem.setAttribute(name, value))
+    },
+    text(value) {
+      if (value === undefined) return $[0].innerText
+      $.forEach((elem) => (elem.innerText = value))
+    },
+    hide() {
+      $.forEach((elem) => (elem.style.display = 'none'))
+    },
+    show() {
+      $.forEach((elem) => (elem.style.display = 'block'))
+    },
+    each(func) {
+      $.forEach(func)
+    },
+    after(html) {
+      $.forEach((elem) => (elem.outerHTML += html))
+    },
+    before(html) {
+      $.forEach((elem) => (elem.outerHTML = html + elem.outerHTML))
+    },
+    append(html) {
+      $.forEach((elem) => (elem.innerHTML += html))
+    },
+    prepend(html) {
+      $.forEach((elem) => (elem.innerHTML = html + elem.innerHTML))
+    },
+    replaceWith(selector) {
+      const jk = JackKnife(selector)
+      $.forEach((elem) => (elem.outerHTML = jk._meta.selectors[0].outerHTML))
+    },
+    replace(selector) {
+      const jk = JackKnife(selector)
+      jk.replaceWith($[0].outerHTML)
+    },
 
-  get length() {
-    return this._meta.selectors.length
-  }
-
-  first() {
-    return new JackKnife(this._meta.selectors[0])
-  }
-
-  last() {
-    return new JackKnife(this._meta.selectors[this.length - 1])
-  }
-
-  get(index) {
-    if (index === undefined) return this._meta.selectors[0]
-    return this._meta.selectors[index]
-  }
-
-  remove() {
-    this._meta.selectors.forEach((elem) => elem.remove())
-  }
-
-  attr(name, value) {
-    if (value === undefined) return this._meta.selectors[0].getAttribute(name)
-    this._meta.selectors.forEach((elem) => elem.setAttribute(name, value))
-  }
-
-  text(value) {
-    if (value === undefined) return this._meta.selectors[0].innerText
-    this._meta.selectors.forEach((elem) => (elem.innerText = value))
-  }
-  hide() {
-    this._meta.selectors.forEach((elem) => (elem.style.display = 'none'))
-  }
-  show() {
-    this._meta.selectors.forEach((elem) => (elem.style.display = 'block'))
-  }
-  each(func) {
-    this._meta.selectors.forEach(func)
-  }
-  after(html) {
-    this._meta.selectors.forEach((elem) => (elem.outerHTML += html))
-  }
-  before(html) {
-    this._meta.selectors.forEach(
-      (elem) => (elem.outerHTML = html + elem.outerHTML)
-    )
-  }
-  append(html) {
-    this._meta.selectors.forEach((elem) => (elem.innerHTML += html))
-  }
-  prepend(html) {
-    this._meta.selectors.forEach(
-      (elem) => (elem.innerHTML = html + elem.innerHTML)
-    )
-  }
-  replaceWith(selector) {
-    const jk = JackKnife(selector)
-    this._meta.selectors.forEach(
-      (elem) => (elem.outerHTML = jk._meta.selectors[0].outerHTML)
-    )
-  }
-  replace(selector) {
-    const jk = JackKnife(selector)
-    jk.replaceWith(this._meta.selectors[0].outerHTML)
-  }
-
-  appendTo(selector) {
-    const jk = JackKnife(selector)
-    jk.append(this._meta.selectors[0].outerHTML)
-  }
-
-  prependTo(selector) {
-    const jk = JackKnife(selector)
-    jk.prepend(this._meta.selectors[0].outerHTML)
-  }
-
-  insertAfter(selector) {
-    const jk = JackKnife(selector)
-    jk.after(this._meta.selectors[0].outerHTML)
-  }
-
-  insertBefore(selector) {
-    const jk = JackKnife(selector)
-    jk.before(this._meta.selectors[0].outerHTML)
-  }
-
-  val(value) {
-    if (value === undefined) return this._meta.selectors[0].value
-    this._meta.selectors.forEach((elem) => (elem.value = value))
-  }
-
-  change(func) {
-    this._meta.selectors.forEach((elem) =>
-      elem.addEventListener('change', func)
-    )
-  }
-
-  find(selector) {
-    return JackKnife(this._meta.selectors[0].querySelectorAll(selector))
-  }
-
-  trigger(event) {
-    this._meta.selectors.forEach((elem) => elem.dispatchEvent(new Event(event)))
-  }
-
-  is(selector) {
-    return this._meta.selectors[0].matches(selector)
-  }
-
-  on(event, func) {
-    this._meta.selectors.forEach((elem) => elem.addEventListener(event, func))
-  }
-
-  off(event, func) {
-    this._meta.selectors.forEach((elem) =>
-      elem.removeEventListener(event, func)
-    )
-  }
-
-  css(name, value) {
-    if (value === undefined) return this._meta.selectors[0].style[name]
-    this._meta.selectors.forEach((elem) => (elem.style[name] = value))
-  }
-
-  parent() {
-    return JackKnife(this._meta.selectors[0].parentNode)
-  }
-
-  children() {
-    return JackKnife(this._meta.selectors[0].children)
-  }
-
-  next() {
-    return JackKnife(this._meta.selectors[0].nextElementSibling)
-  }
-
-  prev() {
-    return JackKnife(this._meta.selectors[0].previousElementSibling)
-  }
-
-  closest(selector) {
-    return JackKnife(this._meta.selectors[0].closest(selector))
-  }
-
-  clone() {
-    return JackKnife(this._meta.selectors[0].cloneNode(true))
-  }
-
-  html(html) {
-    if (html === undefined) return this._meta.selectors[0].innerHTML
-    this._meta.selectors.forEach((elem) => (elem.innerHTML = html))
-  }
-
-  addClass(className) {
-    this._meta.selectors.forEach((elem) => elem.classList.add(className))
-  }
-
-  removeClass(className) {
-    this._meta.selectors.forEach((elem) => elem.classList.remove(className))
-  }
-
-  toggleClass(className) {
-    this._meta.selectors.forEach((elem) => elem.classList.toggle(className))
-  }
-
-  hasClass(className) {
-    return this._meta.selectors[0].classList.contains(className)
-  }
-
-  click(func) {
-    this._meta.selectors.forEach((elem) => elem.addEventListener('click', func))
-  }
-
-  focus(func) {
-    this._meta.selectors.forEach((elem) => elem.addEventListener('focus', func))
-  }
-
-  blur(func) {
-    this._meta.selectors.forEach((elem) => elem.addEventListener('blur', func))
-  }
-
-  submit(func) {
-    this._meta.selectors.forEach((elem) =>
-      elem.addEventListener('submit', func)
-    )
-  }
-
-  keyup(func) {
-    this._meta.selectors.forEach((elem) => elem.addEventListener('keyup', func))
-  }
-
-  keydown(func) {
-    this._meta.selectors.forEach((elem) =>
-      elem.addEventListener('keydown', func)
-    )
-  }
-
-  keypress(func) {
-    this._meta.selectors.forEach((elem) =>
-      elem.addEventListener('keypress', func)
-    )
-  }
-
-  mouseover(func) {
-    this._meta.selectors.forEach((elem) =>
-      elem.addEventListener('mouseover', func)
-    )
-  }
-
-  mouseout(func) {
-    this._meta.selectors.forEach((elem) =>
-      elem.addEventListener('mouseout', func)
-    )
-  }
-
-  mouseenter(func) {
-    this._meta.selectors.forEach((elem) =>
-      elem.addEventListener('mouseenter', func)
-    )
-  }
-
-  mouseleave(func) {
-    this._meta.selectors.forEach((elem) =>
-      elem.addEventListener('mouseleave', func)
-    )
-  }
-
-  mousemove(func) {
-    this._meta.selectors.forEach((elem) =>
-      elem.addEventListener('mousemove', func)
-    )
-  }
-
-  mousedown(func) {
-    this._meta.selectors.forEach((elem) =>
-      elem.addEventListener('mousedown', func)
-    )
-  }
-
-  mouseup(func) {
-    this._meta.selectors.forEach((elem) =>
-      elem.addEventListener('mouseup', func)
-    )
+    appendTo(selector) {
+      const jk = JackKnife(selector)
+      jk.append($[0].outerHTML)
+    },
+    prependTo(selector) {
+      const jk = JackKnife(selector)
+      jk.prepend($[0].outerHTML)
+    },
+    insertAfter(selector) {
+      const jk = JackKnife(selector)
+      jk.after($[0].outerHTML)
+    },
+    insertBefore(selector) {
+      const jk = JackKnife(selector)
+      jk.before($[0].outerHTML)
+    },
+    val(value) {
+      if (value === undefined) return $[0].value
+      $.forEach((elem) => (elem.value = value))
+    },
+    change(func) {
+      $.forEach((elem) => elem.addEventListener('change', func))
+    },
+    find(selector) {
+      return JackKnife($[0].querySelectorAll(selector))
+    },
+    trigger(event) {
+      $.forEach((elem) => elem.dispatchEvent(new Event(event)))
+    },
+    is(selector) {
+      return $[0].matches(selector)
+    },
+    on(event, func) {
+      $.forEach((elem) => elem.addEventListener(event, func))
+    },
+    off(event, func) {
+      $.forEach((elem) => elem.removeEventListener(event, func))
+    },
+    css(name, value) {
+      if (value === undefined) return $[0].style[name]
+      $.forEach((elem) => (elem.style[name] = value))
+    },
+    parent() {
+      return JackKnife($[0].parentNode)
+    },
+    children() {
+      return JackKnife($[0].children)
+    },
+    next() {
+      return JackKnife($[0].nextElementSibling)
+    },
+    prev() {
+      return JackKnife($[0].previousElementSibling)
+    },
+    closest(selector) {
+      return JackKnife($[0].closest(selector))
+    },
+    clone() {
+      return JackKnife($[0].cloneNode(true))
+    },
+    html(html) {
+      if (html === undefined) return $[0].innerHTML
+      $.forEach((elem) => (elem.innerHTML = html))
+    },
+    addClass(className) {
+      $.forEach((elem) => elem.classList.add(className))
+    },
+    removeClass(className) {
+      $.forEach((elem) => elem.classList.remove(className))
+    },
+    toggleClass(className) {
+      $.forEach((elem) => elem.classList.toggle(className))
+    },
+    hasClass(className) {
+      return $[0].classList.contains(className)
+    },
+    click(func) {
+      $.forEach((elem) => elem.addEventListener('click', func))
+    },
+    focus(func) {
+      $.forEach((elem) => elem.addEventListener('focus', func))
+    },
+    blur(func) {
+      $.forEach((elem) => elem.addEventListener('blur', func))
+    },
+    submit(func) {
+      $.forEach((elem) => elem.addEventListener('submit', func))
+    },
+    keyup(func) {
+      $.forEach((elem) => elem.addEventListener('keyup', func))
+    },
+    keydown(func) {
+      $.forEach((elem) => elem.addEventListener('keydown', func))
+    },
+    keypress(func) {
+      $.forEach((elem) => elem.addEventListener('keypress', func))
+    },
+    mouseover(func) {
+      $.forEach((elem) => elem.addEventListener('mouseover', func))
+    },
+    mouseout(func) {
+      $.forEach((elem) => elem.addEventListener('mouseout', func))
+    },
+    mouseenter(func) {
+      $.forEach((elem) => elem.addEventListener('mouseenter', func))
+    },
+    mouseleave(func) {
+      $.forEach((elem) => elem.addEventListener('mouseleave', func))
+    },
+    mousemove(func) {
+      $.forEach((elem) => elem.addEventListener('mousemove', func))
+    },
+    mousedown(func) {
+      $.forEach((elem) => elem.addEventListener('mousedown', func))
+    },
+    mouseup(func) {
+      $.forEach((elem) => elem.addEventListener('mouseup', func))
+    },
   }
 }
 
