@@ -1,6 +1,4 @@
 function JackKnife(selector) {
-  if (!selector) return
-
   let $
 
   if (selector instanceof HTMLElement) {
