@@ -2,7 +2,7 @@
 // @name         Bible Gateway
 // @namespace    https://joshr.work/
 // @homepageURL  https://joshr.work/
-// @version      1.0.26
+// @version      1.0.27
 // @author       Josh
 // @match        *://*.biblegateway.com/passage/*
 // @icon         https://biblegateway.com/favicon.ico
@@ -113,11 +113,10 @@ try {
       location.reload()
     })
 
-    $('.passage-text').prepend(
-      $(
-        '<div><label style="font-weight: bold; padding-right: 5px;">Mode:</label></div>'
-      ).append(drop)
-    )
+    $(
+      '<div><label style="font-weight: bold; padding-right: 5px;">Mode:</label></div>'
+    ).append(drop)
+    $('.passage-text').prepend()
   }
 
   function addTranslationSearch() {

@@ -74,54 +74,60 @@ function JackKnife(selector) {
       html = jk.html()
       if (html === '') return
       $.forEach((elem) => (elem.outerHTML += html))
+      return this
     },
     before(html) {
       const jk = JackKnife(html)
       html = jk.html()
       if (html === '') return
       $.forEach((elem) => (elem.outerHTML = html + elem.outerHTML))
+      return this
     },
     append(html) {
       const jk = JackKnife(html)
       html = jk.outerHtml()
       if (html === '') return
       $.forEach((elem) => (elem.innerHTML += html))
+      return this
     },
     prepend(html) {
       const jk = JackKnife(html)
       html = jk.outerHtml()
       if (html === '') return
       $.forEach((elem) => (elem.innerHTML = html + elem.innerHTML))
+      return this
     },
     replaceWith(selector) {
       const jk = JackKnife(selector)
       if (jk._meta.selections.length === 0) return
       $.forEach((elem) => (elem.outerHTML = jk._meta.selections[0].outerHTML))
+      return jk
     },
     replace(selector) {
       if ($.length === 0) return
       const jk = JackKnife(selector)
       jk.replaceWith($[0].outerHTML)
+      return this
     },
     appendTo(selector) {
       if ($.length === 0) return
       const jk = JackKnife(selector)
-      jk.append($[0].outerHTML)
+      return jk.append($[0].outerHTML)
     },
     prependTo(selector) {
       if ($.length === 0) return
       const jk = JackKnife(selector)
-      jk.prepend($[0].outerHTML)
+      return jk.prepend($[0].outerHTML)
     },
     insertAfter(selector) {
       if ($.length === 0) return
       const jk = JackKnife(selector)
-      jk.after($[0].outerHTML)
+      return jk.after($[0].outerHTML)
     },
     insertBefore(selector) {
       if ($.length === 0) return
       const jk = JackKnife(selector)
-      jk.before($[0].outerHTML)
+      return jk.before($[0].outerHTML)
     },
     val(value) {
       if (value === undefined) return $.length > 0 ? $[0].value : ''
