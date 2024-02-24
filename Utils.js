@@ -2,6 +2,12 @@ function jk_DEBUG(name) {
   return window.location.href.indexOf(`debug=${name}`) > -1
 }
 
+function jk_StandardizeElems(elems) {
+  if (elems instanceof NodeList) elems = Array.from(elems)
+  else if (!Array.isArray(elems)) elems = [elems]
+  return elems
+}
+
 const jk_Utils = {
   Log(text) {
     console.log(`%cUS | ${text}`, 'font-weight: bold;')
@@ -102,19 +108,19 @@ const jk_Utils = {
     return temp.firstChild
   },
   Hide(elems) {
-    if (!Array.isArray(elems) && !(elems instanceof NodeList)) elems = [elems]
+    elems = jk_StandardizeElems(elems)
     elems.forEach((elem) => {
       elem.style.display = 'none'
     })
   },
   Show(elems) {
-    if (!Array.isArray(elems) && !(elems instanceof NodeList)) elems = [elems]
+    elems = jk_StandardizeElems(elems)
     elems.forEach((elem) => {
       elem.style.display = ''
     })
   },
   Remove(elems) {
-    if (!Array.isArray(elems) && !(elems instanceof NodeList)) elems = [elems]
+    elems = jk_StandardizeElems(elems)
     elems.forEach((elem) => {
       elem.remove()
     })
@@ -126,17 +132,17 @@ const jk_Utils = {
     elem.addEventListener(event, func)
   },
   Trigger(elems, event) {
-    if (!Array.isArray(elems) && !(elems instanceof NodeList)) elems = [elems]
+    elems = jk_StandardizeElems(elems)
     elems.forEach((elem) => {
       elem.dispatchEvent(new Event(event))
     })
   },
   Is(elems, selector) {
-    if (!Array.isArray(elems) && !(elems instanceof NodeList)) elems = [elems]
+    elems = jk_StandardizeElems(elems)
     return elems.every((elem) => elem.matches(selector))
   },
   CSS(elems, styles) {
-    if (!Array.isArray(elems) && !(elems instanceof NodeList)) elems = [elems]
+    elems = jk_StandardizeElems(elems)
     elems.forEach((elem) => {
       for (const prop in styles) {
         elem.style[prop] = styles[prop]
