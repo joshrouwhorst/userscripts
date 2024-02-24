@@ -2,11 +2,14 @@
 // @name         All Sites
 // @namespace    https://joshr.work/
 // @homepageURL  https://joshr.work/
-// @version      1.0.8
+// @version      1.0.9
 // @author       Josh
 // @match        *://*/*
 // @require      https://raw.githubusercontent.com/joshrouwhorst/userscripts/main/Utils.js
 // ==/UserScript==
+
+if (jk_DEBUG('all.sites')) debugger
+const $ = JackKnife
 
 // To get rid of cookie banners, add selector here
 const COOKIE_BANNER_SELECTORS = [
@@ -19,8 +22,7 @@ const COOKIE_BANNER_SELECTORS = [
 const MAX_LOOPS = 10
 const LOOP_TIME = 500
 
-const { Log, HasParam } = Utils
-const $ = JackKnife
+const { Log, HasParam } = jk_Utils
 
 $(() => {
   removeCookieBanners()

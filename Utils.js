@@ -196,7 +196,11 @@ function JackKnife(selector) {
   }
 }
 
-const Utils = {
+function jk_DEBUG(name) {
+  return window.location.href.indexOf(`debug=${name}`) > -1
+}
+
+const jk_Utils = {
   Log(text) {
     console.log(`%cUS | ${text}`, 'font-weight: bold;')
   },

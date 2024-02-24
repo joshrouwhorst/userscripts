@@ -2,12 +2,14 @@
 // @name         Wikipedia
 // @namespace    https://joshr.work/
 // @homepageURL  https://joshr.work/
-// @version      1.0.8
+// @version      1.0.9
 // @author       Josh
 // @match        *://*.wikipedia.org/*
 // @icon         https://www.wikipedia.org/static/favicon/wikipedia.ico
 // @require      https://raw.githubusercontent.com/joshrouwhorst/userscripts/main/Utils.js
 // ==/UserScript==
+
+if (jk_DEBUG('wikipedia')) debugger
 
 const $ = JackKnife
 

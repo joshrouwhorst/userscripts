@@ -2,17 +2,19 @@
 // @name         Bible Gateway
 // @namespace    https://joshr.work/
 // @homepageURL  https://joshr.work/
-// @version      1.0.8
+// @version      1.0.9
 // @author       Josh
 // @match        *://*.biblegateway.com/passage/*
 // @icon         https://biblegateway.com/favicon.ico
 // @require      https://raw.githubusercontent.com/joshrouwhorst/userscripts/main/Utils.js
 // ==/UserScript==
 
+if (jk_DEBUG('bible.gateway')) debugger
+
 const $ = JackKnife
 
 try {
-  const { Log, Obj, RemoveAds } = Utils
+  const { Log, Obj, RemoveAds } = jk_Utils
 
   const LOOP_TIME = 500
   const AD_SELECTORS = [
