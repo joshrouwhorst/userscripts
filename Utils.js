@@ -18,6 +18,10 @@ const jk_Utils = {
       'font-weight: bold; background-color: red; color: white;'
     )
   },
+  Memory(key, value) {
+    if (value) localStorage.setItem(key, value)
+    return localStorage.getItem(key)
+  },
   Obj(object) {
     console.log(object)
   },
@@ -106,6 +110,17 @@ const jk_Utils = {
     const temp = document.createElement('div')
     temp.innerHTML = html
     return temp.firstChild
+  },
+  Text(elems, text) {
+    elems = jk_StandardizeElems(elems)
+    if (!text) {
+      text = ''
+      return elems[0].textContent
+    } else {
+      elems.forEach((elem) => {
+        elem.textContent = text
+      })
+    }
   },
   Hide(elems) {
     elems = jk_StandardizeElems(elems)

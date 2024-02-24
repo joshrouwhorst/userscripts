@@ -2,7 +2,7 @@
 // @name         Youtube
 // @namespace    https://joshr.work/
 // @homepageURL  https://joshr.work/
-// @version      1.0.37
+// @version      1.0.38
 // @author       Josh
 // @match        *://*.youtube.com/*
 // @icon         https://www.youtube.com/s/desktop/54055272/img/favicon.ico
@@ -20,8 +20,14 @@ const {
   Trigger,
   $,
   Is,
+  On,
   MakeElement,
   Remove,
+  CSS,
+  Hide,
+  Show,
+  Text,
+  Memory,
 } = jk_Utils
 const LOOP_TIME = 500
 const MAX_TRIES = 10
@@ -68,17 +74,16 @@ function hideComments() {
 
     //Log('Started hiding comments')
 
-    if (
-      $('#comments').length === 0 ||
-      !$('#comments')[0].style.display !== 'none'
-    ) {
+    const comments = $('#comments')
+
+    if (comments.length === 0 || !comments[0].style.display === 'none') {
       //Log('Comments not found or not visible')
       return setTimeout(() => hideComments(), LOOP_TIME)
     }
 
     Log('Hiding Video Comments')
 
-    const hideCommentsState = localStorage.getItem('show.comments') !== 'true'
+    const hideCommentsState = Memory('show.comments') !== 'true'
     const btnText = hideCommentsState ? 'Show Comments' : 'Hide Comments'
 
     const toggleCommentBtn = MakeElement(
@@ -95,15 +100,18 @@ function hideComments() {
     })
 
     On(toggleCommentBtn, 'click', () => {
-      if ($('#comments').is(':visible')) {
-        $('#comments').hide()
-        localStorage.setItem('show.comments', 'false')
-        toggleCommentBtn.text('Show Comments')
+      if (
+        $('#comments').length > 0 &&
+        $('#comments')[0].style.display !== 'none'
+      ) {
+        Hide($('#comments'))
+        Memory('show.comments', 'false')
+        Text(toggleCommentBtn, 'Show Comments')
         Log('Comment Section Hidden')
       } else {
-        $('#comments').show()
-        localStorage.setItem('show.comments', 'true')
-        toggleCommentBtn.text('Hide Comments')
+        Show($('#comments'))
+        Memory('show.comments', 'true')
+        Text(toggleCommentBtn, 'Hide Comments')
         Log('Comment Section Shown')
       }
     })
@@ -114,8 +122,9 @@ function hideComments() {
     })
 
     if (
-      localStorage.getItem('show.comments') !== 'true' &&
-      Is($('#comments'), ':visible')
+      Memory('show.comments') !== 'true' &&
+      $('#comments').length > 0 &&
+      $('#comments')[0].style.display !== 'none'
     ) {
       Hide($('#comments'))
       Log('Comment Section Hidden')
