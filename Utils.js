@@ -17,7 +17,7 @@ function JackKnife(selector) {
     $ = Array.from(selector)
   } else if (selector instanceof Array) {
     $ = selector
-  } else if (selector instanceof JackKnife) {
+  } else if (selector instanceof Object && selector._meta?.isJackKnife) {
     return selector
   } else if (typeof selector === 'function') {
     if (document.readyState === 'loading') {
@@ -29,9 +29,10 @@ function JackKnife(selector) {
 
   if ($ === undefined) $ = []
 
-  this.prototype = {
+  return {
     length: $.length,
     _meta: {
+      isJackKnife: true,
       selections: $,
     },
     first() {
