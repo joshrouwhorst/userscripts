@@ -83,13 +83,13 @@ function JackKnife(selector) {
     },
     append(html) {
       const jk = JackKnife(html)
-      html = jk.html()
+      html = jk.outerHtml()
       if (html === '') return
       $.forEach((elem) => (elem.innerHTML += html))
     },
     prepend(html) {
       const jk = JackKnife(html)
-      html = jk.html()
+      html = jk.outerHtml()
       if (html === '') return
       $.forEach((elem) => (elem.innerHTML = html + elem.innerHTML))
     },
@@ -172,6 +172,10 @@ function JackKnife(selector) {
     html(html) {
       if (html === undefined) return $.length > 0 ? $[0].innerHTML : ''
       $.forEach((elem) => (elem.innerHTML = html))
+    },
+    outerHtml(html) {
+      if (html === undefined) return $.length > 0 ? $[0].outerHTML : ''
+      $.forEach((elem) => (elem.outerHTML = html))
     },
     addClass(className) {
       $.forEach((elem) => elem.classList.add(className))
