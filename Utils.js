@@ -21,8 +21,6 @@ function JackKnife(selector) {
     }
   }
 
-  if ($.length < 1) return
-
   return {
     length: $.length,
     _meta: {
@@ -33,6 +31,9 @@ function JackKnife(selector) {
     },
     last() {
       return JackKnife($[$.length - 1])
+    },
+    nth(index) {
+      return JackKnife($[index])
     },
     get(index) {
       if (index === undefined) return $[0]

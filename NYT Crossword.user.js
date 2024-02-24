@@ -2,7 +2,7 @@
 // @name         NYT Crossword
 // @namespace    https://joshr.work/
 // @homepageURL  https://joshr.work/
-// @version      1.0.10
+// @version      1.0.11
 // @author       Josh
 // @match        *://*.nytcrosswordanswers.org/*
 // @icon         https://nytcrosswordanswers.org/wp-content/uploads/2023/05/cropped-nyt-logo-192x192.jpg
