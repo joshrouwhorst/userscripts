@@ -2,13 +2,14 @@
 // @name         Wikipedia
 // @namespace    https://joshr.work/
 // @homepageURL  https://joshr.work/
-// @version      1.0.5
+// @version      1.0.6
 // @author       Josh
 // @match        *://*.wikipedia.org/*
 // @icon         https://www.wikipedia.org/static/favicon/wikipedia.ico
 // @require      https://raw.githubusercontent.com/joshrouwhorst/userscripts/main/Utils.js
-// @require      https://code.jquery.com/jquery-3.7.1.min.js
 // ==/UserScript==
+
+const $ = JackKnife
 
 let mode = localStorage.getItem('mode')
 const btnStyle =
@@ -35,7 +36,7 @@ function strip() {
 
   $('#bodyContent sup').remove()
 
-  $('#bodyContent a').each((idx, item) => {
+  $('#bodyContent a').each((item) => {
     const $item = $(item)
     $item.replaceWith(`<span>${$item.html()}</span>`)
   })
@@ -50,7 +51,7 @@ function strip() {
   if (HasParam('osh.strip')) {
     $('#bodyContent sup').remove()
 
-    $('#bodyContent a').each((idx, item) => {
+    $('#bodyContent a').each((item) => {
       const $item = $(item)
       $item.replaceWith(`<span>${$item.html()}</span>`)
     })

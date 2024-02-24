@@ -2,12 +2,13 @@
 // @name         StackOverflow
 // @namespace    https://joshr.work/
 // @homepageURL  https://joshr.work/
-// @version      1.0.5
+// @version      1.0.6
 // @author       Josh
 // @match        *://*.stackoverflow.com/*
 // @require      https://raw.githubusercontent.com/joshrouwhorst/userscripts/main/Utils.js
-// @require      https://code.jquery.com/jquery-3.7.1.min.js
 // ==/UserScript==
+
+const $ = JackKnife
 
 const LOOP_TIME = 500
 

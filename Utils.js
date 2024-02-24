@@ -1,3 +1,201 @@
+const JackKnife = (selector) => {
+  if (!selector) return
+
+  let $
+
+  if (selector instanceof HTMLElement) {
+    $ = [selector]
+  } else if (typeof selector === 'string') {
+    $ = document.querySelectorAll(selector)
+  } else if (selector instanceof NodeList) {
+    $ = Array.from(selector)
+  } else if (selector instanceof Array) {
+    $ = selector
+  } else if (selector instanceof JackKnife) {
+    return selector
+  } else if (typeof selector === 'function') {
+    return document.addEventListener('DOMContentLoaded', selector)
+  }
+
+  if ($.length < 1) return
+
+  return {
+    length: $.length,
+    _meta: {
+      selectors: $,
+    },
+    first() {
+      return JackKnife($[0])
+    },
+    last() {
+      return JackKnife($[$.length - 1])
+    },
+    get(index) {
+      if (index === undefined) return $[0]
+      return $[index]
+    },
+    remove() {
+      $.forEach((elem) => elem.remove())
+    },
+    attr(name, value) {
+      if (value === undefined) return $[0].getAttribute(name)
+      $.forEach((elem) => elem.setAttribute(name, value))
+    },
+    text(value) {
+      if (value === undefined) return $[0].innerText
+      $.forEach((elem) => (elem.innerText = value))
+    },
+    hide() {
+      $.forEach((elem) => (elem.style.display = 'none'))
+    },
+    show() {
+      $.forEach((elem) => (elem.style.display = 'block'))
+    },
+    each(func) {
+      $.forEach(func)
+    },
+    after(html) {
+      $.forEach((elem) => (elem.outerHTML += html))
+    },
+    before(html) {
+      $.forEach((elem) => (elem.outerHTML = html + elem.outerHTML))
+    },
+    append(html) {
+      $.forEach((elem) => (elem.innerHTML += html))
+    },
+    prepend(html) {
+      $.forEach((elem) => (elem.innerHTML = html + elem.innerHTML))
+    },
+    replaceWith(selector) {
+      const jk = JackKnife(selector)
+      $.forEach((elem) => (elem.outerHTML = jk._meta.selectors[0].outerHTML))
+    },
+    replace(selector) {
+      const jk = JackKnife(selector)
+      jk.replaceWith($[0].outerHTML)
+    },
+
+    appendTo(selector) {
+      const jk = JackKnife(selector)
+      jk.append($[0].outerHTML)
+    },
+    prependTo(selector) {
+      const jk = JackKnife(selector)
+      jk.prepend($[0].outerHTML)
+    },
+    insertAfter(selector) {
+      const jk = JackKnife(selector)
+      jk.after($[0].outerHTML)
+    },
+    insertBefore(selector) {
+      const jk = JackKnife(selector)
+      jk.before($[0].outerHTML)
+    },
+    val(value) {
+      if (value === undefined) return $[0].value
+      $.forEach((elem) => (elem.value = value))
+    },
+    change(func) {
+      $.forEach((elem) => elem.addEventListener('change', func))
+    },
+    find(selector) {
+      return JackKnife($[0].querySelectorAll(selector))
+    },
+    trigger(event) {
+      $.forEach((elem) => elem.dispatchEvent(new Event(event)))
+    },
+    is(selector) {
+      return $[0].matches(selector)
+    },
+    on(event, func) {
+      $.forEach((elem) => elem.addEventListener(event, func))
+    },
+    off(event, func) {
+      $.forEach((elem) => elem.removeEventListener(event, func))
+    },
+    css(name, value) {
+      if (value === undefined) return $[0].style[name]
+      $.forEach((elem) => (elem.style[name] = value))
+    },
+    parent() {
+      return JackKnife($[0].parentNode)
+    },
+    children() {
+      return JackKnife($[0].children)
+    },
+    next() {
+      return JackKnife($[0].nextElementSibling)
+    },
+    prev() {
+      return JackKnife($[0].previousElementSibling)
+    },
+    closest(selector) {
+      return JackKnife($[0].closest(selector))
+    },
+    clone() {
+      return JackKnife($[0].cloneNode(true))
+    },
+    html(html) {
+      if (html === undefined) return $[0].innerHTML
+      $.forEach((elem) => (elem.innerHTML = html))
+    },
+    addClass(className) {
+      $.forEach((elem) => elem.classList.add(className))
+    },
+    removeClass(className) {
+      $.forEach((elem) => elem.classList.remove(className))
+    },
+    toggleClass(className) {
+      $.forEach((elem) => elem.classList.toggle(className))
+    },
+    hasClass(className) {
+      return $[0].classList.contains(className)
+    },
+    click(func) {
+      $.forEach((elem) => elem.addEventListener('click', func))
+    },
+    focus(func) {
+      $.forEach((elem) => elem.addEventListener('focus', func))
+    },
+    blur(func) {
+      $.forEach((elem) => elem.addEventListener('blur', func))
+    },
+    submit(func) {
+      $.forEach((elem) => elem.addEventListener('submit', func))
+    },
+    keyup(func) {
+      $.forEach((elem) => elem.addEventListener('keyup', func))
+    },
+    keydown(func) {
+      $.forEach((elem) => elem.addEventListener('keydown', func))
+    },
+    keypress(func) {
+      $.forEach((elem) => elem.addEventListener('keypress', func))
+    },
+    mouseover(func) {
+      $.forEach((elem) => elem.addEventListener('mouseover', func))
+    },
+    mouseout(func) {
+      $.forEach((elem) => elem.addEventListener('mouseout', func))
+    },
+    mouseenter(func) {
+      $.forEach((elem) => elem.addEventListener('mouseenter', func))
+    },
+    mouseleave(func) {
+      $.forEach((elem) => elem.addEventListener('mouseleave', func))
+    },
+    mousemove(func) {
+      $.forEach((elem) => elem.addEventListener('mousemove', func))
+    },
+    mousedown(func) {
+      $.forEach((elem) => elem.addEventListener('mousedown', func))
+    },
+    mouseup(func) {
+      $.forEach((elem) => elem.addEventListener('mouseup', func))
+    },
+  }
+}
+
 const Utils = {
   Log(text) {
     console.log(`%cUS | ${text}`, 'font-weight: bold;')

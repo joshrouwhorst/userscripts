@@ -2,13 +2,14 @@
 // @name         Bible Gateway
 // @namespace    https://joshr.work/
 // @homepageURL  https://joshr.work/
-// @version      1.0.5
+// @version      1.0.6
 // @author       Josh
 // @match        *://*.biblegateway.com/passage/*
 // @icon         https://biblegateway.com/favicon.ico
 // @require      https://raw.githubusercontent.com/joshrouwhorst/userscripts/main/Utils.js
-// @require      https://code.jquery.com/jquery-3.7.1.min.js
 // ==/UserScript==
+
+const $ = JackKnife
 
 try {
   const { Log, Obj, RemoveAds } = Utils

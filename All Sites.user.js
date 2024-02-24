@@ -2,11 +2,10 @@
 // @name         All Sites
 // @namespace    https://joshr.work/
 // @homepageURL  https://joshr.work/
-// @version      1.0.5
+// @version      1.0.6
 // @author       Josh
 // @match        *://*/*
 // @require      https://raw.githubusercontent.com/joshrouwhorst/userscripts/main/Utils.js
-// @require      https://code.jquery.com/jquery-3.7.1.min.js
 // ==/UserScript==
 
 // To get rid of cookie banners, add selector here
@@ -21,6 +20,7 @@ const MAX_LOOPS = 10
 const LOOP_TIME = 500
 
 const { Log, HasParam } = Utils
+const $ = JackKnife
 
 $(() => {
   removeCookieBanners()
