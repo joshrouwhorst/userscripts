@@ -257,6 +257,7 @@ const jk_Utils = {
     return null
   },
   GetAriaLabel(elem) {
+    const $ = JackKnife
     const $elem = $(elem)
     const label = $elem.attr('aria-label')
     if (label) return label
@@ -294,6 +295,7 @@ const jk_Utils = {
     func(document.location.href)
   },
   RemoveAds(selectors, loopTime) {
+    const $ = JackKnife
     if (!loopTime) loopTime = 500
     selectors.forEach((selector) => {
       if (typeof selector === 'function') selector()
