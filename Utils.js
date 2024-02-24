@@ -37,27 +37,28 @@ function JackKnife(selector) {
       selections: $,
     },
     first() {
-      return JackKnife($[0])
+      return $.length > 0 ? JackKnife($[0]) : null
     },
     last() {
-      return JackKnife($[$.length - 1])
+      return $.length > 0 ? JackKnife($[$.length - 1]) : null
     },
     nth(index) {
-      return JackKnife($[index])
+      return $.length > 0 ? JackKnife($[index]) : null
     },
     get(index) {
-      if (index === undefined) return $[0]
+      if (index === undefined) return $.length > 0 ? $[0] : null
       return $[index]
     },
     remove() {
       $.forEach((elem) => elem.remove())
     },
     attr(name, value) {
-      if (value === undefined) return $[0].getAttribute(name)
+      if (value === undefined)
+        return $.length > 0 ? $[0].getAttribute(name) : ''
       $.forEach((elem) => elem.setAttribute(name, value))
     },
     text(value) {
-      if (value === undefined) return $[0].innerText
+      if (value === undefined) return $.length > 0 ? $[0].innerText : ''
       $.forEach((elem) => (elem.innerText = value))
     },
     hide() {
@@ -83,44 +84,49 @@ function JackKnife(selector) {
     },
     replaceWith(selector) {
       const jk = JackKnife(selector)
+      if (jk._meta.selections.length === 0) return
       $.forEach((elem) => (elem.outerHTML = jk._meta.selections[0].outerHTML))
     },
     replace(selector) {
+      if ($.length === 0) return
       const jk = JackKnife(selector)
       jk.replaceWith($[0].outerHTML)
     },
-
     appendTo(selector) {
+      if ($.length === 0) return
       const jk = JackKnife(selector)
       jk.append($[0].outerHTML)
     },
     prependTo(selector) {
+      if ($.length === 0) return
       const jk = JackKnife(selector)
       jk.prepend($[0].outerHTML)
     },
     insertAfter(selector) {
+      if ($.length === 0) return
       const jk = JackKnife(selector)
       jk.after($[0].outerHTML)
     },
     insertBefore(selector) {
+      if ($.length === 0) return
       const jk = JackKnife(selector)
       jk.before($[0].outerHTML)
     },
     val(value) {
-      if (value === undefined) return $[0].value
+      if (value === undefined) return $.length > 0 ? $[0].value : ''
       $.forEach((elem) => (elem.value = value))
     },
     change(func) {
       $.forEach((elem) => elem.addEventListener('change', func))
     },
     find(selector) {
-      return JackKnife($[0].querySelectorAll(selector))
+      return $.length > 0 ? JackKnife($[0].querySelectorAll(selector)) : null
     },
     trigger(event) {
       $.forEach((elem) => elem.dispatchEvent(new Event(event)))
     },
     is(selector) {
-      return $[0].matches(selector)
+      return $.length > 0 ? $[0].matches(selector) : false
     },
     on(event, func) {
       $.forEach((elem) => elem.addEventListener(event, func))
@@ -129,29 +135,29 @@ function JackKnife(selector) {
       $.forEach((elem) => elem.removeEventListener(event, func))
     },
     css(name, value) {
-      if (value === undefined) return $[0].style[name]
+      if (value === undefined) return $.length > 0 ? $[0].style[name] : ''
       $.forEach((elem) => (elem.style[name] = value))
     },
     parent() {
-      return JackKnife($[0].parentNode)
+      return $.length > 0 ? JackKnife($[0].parentNode) : null
     },
     children() {
-      return JackKnife($[0].children)
+      return $.length > 0 ? JackKnife($[0].children) : null
     },
     next() {
-      return JackKnife($[0].nextElementSibling)
+      return $.length > 0 ? JackKnife($[0].nextElementSibling) : null
     },
     prev() {
-      return JackKnife($[0].previousElementSibling)
+      return $.length > 0 ? JackKnife($[0].previousElementSibling) : null
     },
     closest(selector) {
-      return JackKnife($[0].closest(selector))
+      return $.length > 0 ? JackKnife($[0].closest(selector)) : null
     },
     clone() {
-      return JackKnife($[0].cloneNode(true))
+      return $.length > 0 ? JackKnife($[0].cloneNode(true)) : null
     },
     html(html) {
-      if (html === undefined) return $[0].innerHTML
+      if (html === undefined) return $.length > 0 ? $[0].innerHTML : ''
       $.forEach((elem) => (elem.innerHTML = html))
     },
     addClass(className) {
@@ -164,7 +170,7 @@ function JackKnife(selector) {
       $.forEach((elem) => elem.classList.toggle(className))
     },
     hasClass(className) {
-      return $[0].classList.contains(className)
+      return $.length > 0 ? $[0].classList.contains(className) : false
     },
     click(func) {
       $.forEach((elem) => elem.addEventListener('click', func))
