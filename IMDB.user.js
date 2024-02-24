@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         IMDB
 // @namespace    https://joshr.work/
-// @version      1.0.30
+// @version      1.0.31
 // @author       Josh
 // @match        *://*.imdb.com/*
 // @icon         https://m.media-amazon.com/images/G/01/imdb/images-ANDW73HA/favicon_iPhone_retina_180x180._CB1582158069_.png
@@ -11,12 +11,10 @@
 
 if (jk_DEBUG('imdb')) debugger
 
-const $ = JackKnife
-
-const { Log, Obj, OnLocationChange, RemoveAds } = jk_Utils
+const { Log, Obj, OnLocationChange, RemoveAds, Load } = jk_Utils
 const LOOP_TIME = 500
 
-$(() => {
+Load(() => {
   OnLocationChange(() => run())
 })
 

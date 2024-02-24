@@ -2,7 +2,7 @@
 // @name         Wikipedia
 // @namespace    https://joshr.work/
 // @homepageURL  https://joshr.work/
-// @version      1.0.30
+// @version      1.0.31
 // @author       Josh
 // @match        *://*.wikipedia.org/*
 // @icon         https://www.wikipedia.org/static/favicon/wikipedia.ico
@@ -11,51 +11,67 @@
 
 if (jk_DEBUG('wikipedia')) debugger
 
-const $ = JackKnife
+const { Load, On, Remove, Replace, MakeElement } = jk_Utils
 
-let mode = localStorage.getItem('mode')
-const btnStyle =
-  'display: inline-block; padding: 5px; border: none; background-color: transparent; color: blue; text-decoration: underline; cursor: pointer;'
+Load(() => {
+  let mode = localStorage.getItem('mode')
+  const btnStyle =
+    'display: inline-block; padding: 5px; border: none; background-color: transparent; color: blue; text-decoration: underline; cursor: pointer;'
 
-if (mode == 'strip') {
-  strip()
-} else {
-  $(`<button style='${btnStyle}'>Strip</button>`)
-    .click(() => {
-      localStorage.setItem('mode', 'strip')
-      location.reload()
+  if (mode == 'strip') {
+    strip()
+  } else {
+    $(`<button style='${btnStyle}'>Strip</button>`).forEach((item) => {
+      On(item, 'click', () => {
+        localStorage.setItem('mode', 'strip')
+        location.reload()
+      })
+
+      item.insertBefore($('#bodyContent')[0])
     })
-    .insertBefore('#bodyContent')
-}
+  }
+})
 
 function strip() {
-  $(`<button style='${btnStyle}'>Original</button>`)
-    .click(() => {
+  $(`<button style='${btnStyle}'>Original</button>`).forEach((item) => {
+    On(item, 'click', () => {
       localStorage.setItem('mode', 'default')
       location.reload()
     })
-    .insertBefore('#bodyContent')
 
-  $('#bodyContent sup').remove()
-
-  $('#bodyContent a').each((item) => {
-    const $item = $(item)
-    $item.replaceWith(`<span>${$item.html()}</span>`)
+    item.insertBefore($('#bodyContent')[0])
   })
 
-  $('#right-navigation .vector-menu-content-list').prepend(
-    `<li class="mw-list-item collapsible"><a href="${normalUrl}"><span>Normal</span></a></li>`
-  )
-  $('#right-navigation .vector-menu-content-list').prepend(
-    `<li class="mw-list-item collapsible"><a href="${stripUrl}"><span>Strip</span></a></li>`
-  )
+  Remove($('#bodyContent sup'))
+
+  $('#bodyContent a').forEach((item) => {
+    const $item = $(item)
+    $item.replaceWith(`<span>${$item.html()}</span>`)
+
+    Replace(item, MakeElement(`<span>${$item.html()}</span>`))
+  })
+
+  $('#right-navigation .vector-menu-content-list').forEach((item) => {
+    item.prepend(
+      MakeElement(
+        `<li class="mw-list-item collapsible"><a href="${normalUrl}"><span>Normal</span></a></li>`
+      )
+    )
+  })
+
+  $('#right-navigation .vector-menu-content-list').forEach((item) => {
+    item.prepend(
+      MakeElement(
+        `<li class="mw-list-item collapsible"><a href="${stripUrl}"><span>Strip</span></a></li>`
+      )
+    )
+  })
 
   if (HasParam('osh.strip')) {
-    $('#bodyContent sup').remove()
+    Remove($('#bodyContent sup'))
 
-    $('#bodyContent a').each((item) => {
-      const $item = $(item)
-      $item.replaceWith(`<span>${$item.html()}</span>`)
+    $('#bodyContent a').forEach((item) => {
+      Replace(item, MakeElement(`<span>${item.innerHTML}</span>`))
     })
   }
 }

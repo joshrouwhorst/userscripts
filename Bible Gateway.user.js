@@ -2,7 +2,7 @@
 // @name         Bible Gateway
 // @namespace    https://joshr.work/
 // @homepageURL  https://joshr.work/
-// @version      1.0.30
+// @version      1.0.31
 // @author       Josh
 // @match        *://*.biblegateway.com/passage/*
 // @icon         https://biblegateway.com/favicon.ico
@@ -11,10 +11,8 @@
 
 if (jk_DEBUG('bible.gateway')) debugger
 
-const $ = JackKnife
-
 try {
-  const { Log, Obj, RemoveAds } = jk_Utils
+  const { Log, RemoveAds, Hide, Remove, $, MakeElement, On, Load } = jk_Utils
 
   const LOOP_TIME = 500
   const AD_SELECTORS = [
@@ -30,9 +28,11 @@ try {
     '.sidebar-tall-ad > div',
   ]
 
-  $(() => {
+  Load(() => {
     Log('Bible Gateway User Script Running...')
-    $('.resources').hide()
+
+    Hide($('.resources'))
+
     const mode = localStorage.getItem('mode')
 
     if (mode === 'Strip') stripText()
@@ -45,111 +45,122 @@ try {
   })
 
   function stripText() {
-    $('sup.footnote').each((item) => {
-      $(item).remove()
-    })
+    Remove($('sup.footnote'))
 
-    $('sup.versenum').each((item) => {
-      $(item).remove()
-    })
+    Remove($('sup.versenum'))
 
-    $('span.chapternum').each((item) => {
-      $(item).remove()
-    })
+    Remove($('span.chapternum'))
   }
 
   function convertToQuote() {
-    $('sup.footnote').each((item) => {
-      $(item).remove()
-    })
+    Remove($('sup.footnote'))
 
-    $('sup.versenum').each((item) => {
-      $(item).remove()
-    })
+    Remove($('sup.versenum'))
 
-    $('span.chapternum').each((item) => {
-      $(item).remove()
-    })
+    Remove($('span.chapternum'))
 
-    $('.passage-text p:not(.spacer)').after('<p class="spacer"></p>')
-    $('.passage-text p').prepend('> ')
+    $('.passage-text p:not(.spacer)').forEach((paragraph) => {
+      const spacer = document.createElement('p')
+      paragraph.after(spacer)
+      paragraph.prepend('> ')
+    })
   }
 
   function addMarkup() {
     const now = new Date()
-    $('.std-text').prepend(
-      `<br /><div># ${$(
-        '.quick-search'
-      ).val()}</div><div>Added: ${now.toUTCString()}</div><div>Tags: [[Bible Chapter]] [[Bible]]</div><br /><div>[Web](${
-        window.location.href
-      })</div>`
-    )
+    const quickSearchValue = $('.quick-search')[0]?.value
+    const stdText = $('.std-text')[0]
 
-    $('sup.footnote').each((item) => {
-      const text = $(item).text().trim()
-      $(item).replaceWith('**^** ')
+    const div1 = document.createElement('div')
+    div1.innerHTML = `# ${quickSearchValue}`
+    stdText.insertBefore(div1, stdText.firstChild)
+
+    const div2 = document.createElement('div')
+    div2.innerHTML = `Added: ${now.toUTCString()}`
+    stdText.insertBefore(div2, stdText.firstChild)
+
+    const div3 = document.createElement('div')
+    div3.innerHTML = 'Tags: [[Bible Chapter]] [[Bible]]'
+    stdText.insertBefore(div3, stdText.firstChild)
+
+    const div4 = document.createElement('div')
+    div4.innerHTML = `[Web](${window.location.href})`
+    stdText.insertBefore(div4, stdText.firstChild)
+
+    document.querySelectorAll('sup.footnote').forEach((item) => {
+      const text = item.textContent.trim()
+      item.outerHTML = '**^** '
     })
 
-    $('sup.versenum').each((item) => {
-      const text = $(item).text().trim()
-      $(item).replaceWith(`*${text}* `)
+    document.querySelectorAll('sup.versenum').forEach((item) => {
+      const text = item.textContent.trim()
+      item.outerHTML = `*${text}* `
     })
 
-    $('span.chapternum').each((item) => {
-      const text = $(item).text().trim()
-      $(item).replaceWith(`**${text}** `)
+    document.querySelectorAll('span.chapternum').forEach((item) => {
+      const text = item.textContent.trim()
+      item.outerHTML = `**${text}** `
     })
   }
 
   function addHeader() {
-    const drop = $(
+    const drop = MakeElement(
       '<select style="background-color: yellow; padding: 5px; border: 2px solid black; font-weight: bold; color: black; filter: none;"><option>Regular</option><option>Strip</option><option>Quote</option><option>Markdown</option></select>'
     )
 
-    drop.val(localStorage.getItem('mode') || 'Regular')
+    drop.value = localStorage.getItem('mode') || 'Regular'
 
-    drop.change(() => {
-      localStorage.setItem('mode', drop.val())
+    On(drop, 'change', () => {
+      localStorage.setItem('mode', drop.value)
       location.reload()
     })
 
-    let headerElem = $(
+    const headerElem = MakeElement(
       '<div><label style="font-weight: bold; padding-right: 5px;">Mode:</label></div>'
-    ).append(drop)
-    $('.passage-text').prepend(headerElem)
+    )
+    headerElem.appendChild(drop)
+
+    const passageText = document.querySelector('.passage-text')
+    passageText.insertBefore(headerElem, passageText.firstChild)
   }
 
   function addTranslationSearch() {
-    const $transLink = $('.translation[role="button"]')
-    const $search = $('#translation-search')
+    const transLink = document.querySelector('.translation[role="button"]')
+    const search = document.getElementById('translation-search')
+
     // Check if the dropdown exists and has not been fixed
-    if ($transLink.length > 0 && $search.length <= 0) {
+    if (transLink && !search) {
       // Create the search text box
-      const box = $(
+      const box = MakeElement(
         `<div><input type="text" id="translation-search" placeholder="Translation Search" style="width: 100%; padding: 5px; border: 2px solid black; background-color: yellow; font-weight: bold; color: black;" /></div>`
       )
       // Add text box
-      $transLink.after(box)
+      transLink.after(box)
     }
 
     // Check if the dropdown is showing
-    if ($transLink.find('.r-dropdown').length > 0) {
+    const dropdown = transLink.querySelector('.r-dropdown')
+    if (dropdown) {
       // Filter the dropdown
-      const val = $('#translation-search').val().toLowerCase()
-      if (val === '') $('.translation .r-dropdown ul li').show()
-      else {
-        $('.translation .r-dropdown ul li').each((item) => {
-          const text = $(item).text().toLowerCase()
+      const val = document
+        .getElementById('translation-search')
+        .value.toLowerCase()
+      const dropdownItems = dropdown.querySelectorAll('ul li')
+      if (val === '') {
+        dropdownItems.forEach((item) => (item.style.display = 'block'))
+      } else {
+        dropdownItems.forEach((item) => {
+          const text = item.textContent.toLowerCase()
           if (text.includes(val)) {
-            $(item).show()
+            item.style.display = 'block'
           } else {
-            $(item).hide()
+            item.style.display = 'none'
           }
         })
       }
     }
 
-    setTimeout(() => addTranslationSearch(), LOOP_TIME)
+    setTimeout(addTranslationSearch, LOOP_TIME)
   }
 } catch (err) {
   console.error('US | Error', err)

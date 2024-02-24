@@ -2,14 +2,13 @@
 // @name         All Sites
 // @namespace    https://joshr.work/
 // @homepageURL  https://joshr.work/
-// @version      1.0.30
+// @version      1.0.31
 // @author       Josh
 // @match        *://*/*
 // @require      https://raw.githubusercontent.com/joshrouwhorst/userscripts/main/Utils.js
 // ==/UserScript==
 
 if (jk_DEBUG('all.sites')) debugger
-const $ = JackKnife
 
 // To get rid of cookie banners, add selector here
 const COOKIE_BANNER_SELECTORS = [
@@ -22,9 +21,9 @@ const COOKIE_BANNER_SELECTORS = [
 const MAX_LOOPS = 10
 const LOOP_TIME = 500
 
-const { Log, HasParam } = jk_Utils
+const { Log, HasParam, $, Remove, Load } = jk_Utils
 
-$(() => {
+Load(() => {
   removeCookieBanners()
   siteInfo()
 })
@@ -36,7 +35,7 @@ function removeCookieBanners(loop) {
   COOKIE_BANNER_SELECTORS.forEach((selector) => {
     if ($(selector).length > 0) {
       Log(`Removing cookie banner with selector ${selector}`)
-      $(selector).remove()
+      Remove($(selector))
     }
   })
 
@@ -59,10 +58,10 @@ function siteInfo() {
     charset: null,
     links: {},
     scripts: {
-      head: $('head script').get(),
-      body: $('body script').get(),
+      head: Array.from(document.head.getElementsByTagName('script')),
+      body: Array.from(document.body.getElementsByTagName('script')),
     },
-    styles: $('style').get(),
+    styles: Array.from(document.getElementsByTagName('style')),
     meta: {},
     openGraph: {},
     twitter: {},

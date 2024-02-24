@@ -2,7 +2,7 @@
 // @name         Youtube
 // @namespace    https://joshr.work/
 // @homepageURL  https://joshr.work/
-// @version      1.0.30
+// @version      1.0.31
 // @author       Josh
 // @match        *://*.youtube.com/*
 // @icon         https://www.youtube.com/s/desktop/54055272/img/favicon.ico
@@ -11,15 +11,24 @@
 
 if (jk_DEBUG('youtube')) debugger
 
-const $ = JackKnife
-
-const { Log, Err, Obj, OnLocationChange } = Utils
+const {
+  Log,
+  Err,
+  Obj,
+  OnLocationChange,
+  Load,
+  Trigger,
+  $,
+  Is,
+  MakeElement,
+  Remove,
+} = jk_Utils
 const LOOP_TIME = 500
 const MAX_TRIES = 10
 const MAX_SECONDS = 10
 const LOAD_START = new Date()
 
-$(() => {
+Load(() => {
   Log('YouTube User Script Running...')
   run()
   OnLocationChange(() => run())
@@ -38,9 +47,12 @@ function run() {
 
 function hideChat() {
   try {
-    $(
-      '#chat-container button[aria-label="Hide chat replay"], #chat-container button[aria-label="Hide chat"]'
-    ).trigger('click')
+    Trigger(
+      $(
+        '#chat-container button[aria-label="Hide chat replay"], #chat-container button[aria-label="Hide chat"]'
+      ),
+      'click'
+    )
 
     if (new Date() - LOAD_START < MAX_SECONDS * 1000)
       setTimeout(() => hideChat(), LOOP_TIME)
@@ -56,7 +68,7 @@ function hideComments() {
 
     //Log('Started hiding comments')
 
-    if ($('#comments').length === 0 || !$('#comments').is(':visible')) {
+    if ($('#comments').length === 0 || !Is($('#comments'), ':visible')) {
       //Log('Comments not found or not visible')
       return setTimeout(() => hideComments(), LOOP_TIME)
     }
@@ -66,9 +78,11 @@ function hideComments() {
     const hideCommentsState = localStorage.getItem('show.comments') !== 'true'
     const btnText = hideCommentsState ? 'Show Comments' : 'Hide Comments'
 
-    const toggleCommentBtn = $(
+    const toggleCommentBtn = MakeElement(
       `<button id="toggleCommentsBtn">${btnText}</button>`
-    ).css({
+    )
+
+    CSS(toggleCommentBtn, {
       'font-weight': 'bold',
       padding: '10px',
       'background-color': 'yellow',
@@ -77,7 +91,7 @@ function hideComments() {
       'font-size': '1.5em',
     })
 
-    toggleCommentBtn.click(() => {
+    On(toggleCommentBtn, 'click', () => {
       if ($('#comments').is(':visible')) {
         $('#comments').hide()
         localStorage.setItem('show.comments', 'false')
@@ -92,13 +106,15 @@ function hideComments() {
     })
 
     Log('Adding Show/Hide Comments Button')
-    $('#comments').before(toggleCommentBtn)
+    $('#comments').forEach((item) => {
+      item.prepend(toggleCommentBtn)
+    })
 
     if (
       localStorage.getItem('show.comments') !== 'true' &&
-      $('#comments').is(':visible')
+      Is($('#comments'), ':visible')
     ) {
-      $('#comments').hide()
+      Hide($('#comments'))
       Log('Comment Section Hidden')
     } else {
       Log('Comment Section Not Hidden')
@@ -113,17 +129,17 @@ function closeAds() {
   try {
     if ($('.ytp-ad-overlay-close-container').length > 0) {
       Log('Closing video banner ad')
-      $('.ytp-ad-overlay-close-container').trigger('click')
+      Trigger($('.ytp-ad-overlay-close-container'), 'click')
     }
 
     if ($('.ytp-ad-overlay-close-button').length > 0) {
       Log('Closing video banner ad')
-      $('.ytp-ad-overlay-close-button').trigger('click')
+      Trigger($('.ytp-ad-overlay-close-button'), 'click')
     }
 
     if ($('ytd-promoted-sparkles-web-renderer').length > 0) {
       Log('Closing side ad')
-      $('ytd-promoted-sparkles-web-renderer').remove()
+      Remove($('ytd-promoted-sparkles-web-renderer'))
     }
 
     setTimeout(() => closeAds(), LOOP_TIME)
@@ -137,7 +153,7 @@ function autoSkip() {
   try {
     if ($('.ytp-ad-skip-button-text').length > 0) {
       Log('Auto Skipping')
-      $('.ytp-ad-skip-button-text').trigger('click')
+      Trigger($('.ytp-ad-skip-button-text'), 'click')
     }
 
     if (new Date() - LOAD_START < MAX_SECONDS * 1000)
@@ -156,7 +172,7 @@ function showDescription() {
       $('#description tp-yt-paper-button#expand').length > 0 &&
       $('#description-inline-expander[is-expanded]').length === 0
     ) {
-      $('#description tp-yt-paper-button#expand').trigger('click')
+      Trigger($('#description tp-yt-paper-button#expand'), 'click')
     }
 
     if (new Date() - LOAD_START < MAX_SECONDS * 1000)

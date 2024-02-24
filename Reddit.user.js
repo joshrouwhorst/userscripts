@@ -2,7 +2,7 @@
 // @name         Reddit
 // @namespace    https://joshr.work/
 // @homepageURL  https://joshr.work/
-// @version      1.0.30
+// @version      1.0.31
 // @author       Josh
 // @match        *://*.reddit.com/*
 // @icon         https://www.redditstatic.com/shreddit/assets/favicon/192x192.png
@@ -11,12 +11,10 @@
 
 if (jk_DEBUG('reddit')) debugger
 
-const $ = JackKnife
-
-const { RemoveAds } = Utils
+const { RemoveAds, Load } = jk_Utils
 
 const AD_SELECTORS = ['shreddit-ad-post', '.promotedlink']
 
-$(() => {
+Load(() => {
   RemoveAds(AD_SELECTORS)
 })
