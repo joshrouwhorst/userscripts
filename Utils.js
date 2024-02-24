@@ -44,13 +44,13 @@ const jk_Utils = {
     return null
   },
   GetAriaLabel(elem) {
-    const $ = JackKnife
-    const $elem = $(elem)
-    const label = $elem.attr('aria-label')
+    const label = elem.getAttribute('aria-label')
     if (label) return label
 
-    const id = $elem.attr('aria-labelledby')
-    if (id) return $(`#${id}`).text()
+    const id = elem.getAttribute('aria-labelledby')
+    if (id) return document.getElementById(id).textContent
+
+    return null
   },
   HasParam(name) {
     return (
@@ -82,11 +82,15 @@ const jk_Utils = {
     func(document.location.href)
   },
   RemoveAds(selectors, loopTime) {
-    const $ = JackKnife
     if (!loopTime) loopTime = 500
     selectors.forEach((selector) => {
       if (typeof selector === 'function') selector()
-      else if ($(selector).length > 0) $(selector).remove()
+      else {
+        const elements = document.querySelectorAll(selector)
+        elements.forEach((element) => {
+          element.remove()
+        })
+      }
     })
 
     setTimeout(() => jk_Utils.RemoveAds(selectors, loopTime), loopTime)
@@ -98,19 +102,19 @@ const jk_Utils = {
     return temp.firstChild
   },
   Hide(elems) {
-    if (!Array.isArray(elems)) elems = [elems]
+    if (!Array.isArray(elems) && !(elems instanceof NodeList)) elems = [elems]
     elems.forEach((elem) => {
       elem.style.display = 'none'
     })
   },
   Show(elems) {
-    if (!Array.isArray(elems)) elems = [elems]
+    if (!Array.isArray(elems) && !(elems instanceof NodeList)) elems = [elems]
     elems.forEach((elem) => {
       elem.style.display = ''
     })
   },
   Remove(elems) {
-    if (!Array.isArray(elems)) elems = [elems]
+    if (!Array.isArray(elems) && !(elems instanceof NodeList)) elems = [elems]
     elems.forEach((elem) => {
       elem.remove()
     })
@@ -122,17 +126,17 @@ const jk_Utils = {
     elem.addEventListener(event, func)
   },
   Trigger(elems, event) {
-    if (!Array.isArray(elems)) elems = [elems]
+    if (!Array.isArray(elems) && !(elems instanceof NodeList)) elems = [elems]
     elems.forEach((elem) => {
       elem.dispatchEvent(new Event(event))
     })
   },
   Is(elems, selector) {
-    if (!Array.isArray(elems)) elems = [elems]
+    if (!Array.isArray(elems) && !(elems instanceof NodeList)) elems = [elems]
     return elems.all((elem) => elem.matches(selector))
   },
   CSS(elems, styles) {
-    if (!Array.isArray(elems)) elems = [elems]
+    if (!Array.isArray(elems) && !(elems instanceof NodeList)) elems = [elems]
     elems.forEach((elem) => {
       for (const prop in styles) {
         elem.style[prop] = styles[prop]
