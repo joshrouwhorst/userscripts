@@ -29,6 +29,14 @@ function JackKnife(selector) {
 
   if ($ === undefined) $ = []
 
+  function getHtmlNode(html) {
+    if (html instanceof HTMLElement) return html
+    if (typeof html !== 'string' || html.indexOf('<') !== 0) return null
+    const temp = document.createElement('div')
+    temp.innerHTML = html
+    return temp.firstChild
+  }
+
   return {
     length: $.length,
     _meta: {
@@ -70,64 +78,85 @@ function JackKnife(selector) {
       $.forEach(func)
     },
     after(html) {
-      const jk = JackKnife(html)
-      html = jk.html()
-      if (html === '') return
-      $.forEach((elem) => (elem.outerHTML += html))
+      html = getHtmlNode(html)
+      if (!html) return this
+
+      $.forEach((elem) => {
+        elem.insertAdjacentElement('afterend', html.cloneNode(true))
+      })
+
       return this
     },
     before(html) {
-      const jk = JackKnife(html)
-      html = jk.html()
-      if (html === '') return
-      $.forEach((elem) => (elem.outerHTML = html + elem.outerHTML))
+      html = getHtmlNode(html)
+      if (!html) return this
+
+      $.forEach((elem) => {
+        elem.insertAdjacentElement('beforebegin', html.cloneNode(true))
+      })
+
       return this
     },
     append(html) {
-      const jk = JackKnife(html)
-      html = jk.outerHtml()
-      if (html === '') return
-      $.forEach((elem) => (elem.innerHTML += html))
+      html = getHtmlNode(html)
+      if (!html) return this
+
+      $.forEach((elem) => elem.appendChild(html.cloneNode(true)))
       return this
     },
     prepend(html) {
-      const jk = JackKnife(html)
-      html = jk.outerHtml()
-      if (html === '') return
-      $.forEach((elem) => (elem.innerHTML = html + elem.innerHTML))
+      html = getHtmlNode(html)
+      if (!html) return this
+
+      $.forEach((elem) => elem.prepend(html.cloneNode(true)))
       return this
     },
-    replaceWith(selector) {
-      const jk = JackKnife(selector)
-      if (jk._meta.selections.length === 0) return
-      $.forEach((elem) => (elem.outerHTML = jk._meta.selections[0].outerHTML))
+    replaceWith(html) {
+      html = getHtmlNode(html)
+      if (!html) return this
+
+      $.forEach((elem) => elem.replaceWith(html.cloneNode(true)))
+      return this
+    },
+    replace(html) {
+      html = getHtmlNode(html)
+      if (!html) return this
+
+      $.forEach((elem) => {
+        html.replaceWith(elem.cloneNode(true))
+      })
+
+      return this
+    },
+    appendTo(html) {
+      html = getHtmlNode(html)
+      if (!html) return this
+
+      const jk = JackKnife(html).append($[0])
+
       return jk
     },
-    replace(selector) {
-      if ($.length === 0) return
-      const jk = JackKnife(selector)
-      jk.replaceWith($[0].outerHTML)
-      return this
+    prependTo(html) {
+      html = getHtmlNode(html)
+      if (!html) return this
+
+      const jk = JackKnife(html).prepend($[0])
+
+      return jk
     },
-    appendTo(selector) {
-      if ($.length === 0) return
-      const jk = JackKnife(selector)
-      return jk.append($[0].outerHTML)
-    },
-    prependTo(selector) {
-      if ($.length === 0) return
-      const jk = JackKnife(selector)
-      return jk.prepend($[0].outerHTML)
-    },
-    insertAfter(selector) {
-      if ($.length === 0) return
-      const jk = JackKnife(selector)
-      return jk.after($[0].outerHTML)
+    insertAfter(html) {
+      html = getHtmlNode(html)
+      if (!html) return this
+
+      const jk = JackKnife(html).after($[0])
+      return jk
     },
     insertBefore(selector) {
-      if ($.length === 0) return
-      const jk = JackKnife(selector)
-      return jk.before($[0].outerHTML)
+      html = getHtmlNode(html)
+      if (!html) return this
+
+      const jk = JackKnife(html).before($[0])
+      return jk
     },
     val(value) {
       if (value === undefined) return $.length > 0 ? $[0].value : ''
