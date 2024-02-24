@@ -69,15 +69,27 @@ function JackKnife(selector) {
       $.forEach(func)
     },
     after(html) {
+      const jk = JackKnife(html)
+      html = jk.html()
+      if (html === '') return
       $.forEach((elem) => (elem.outerHTML += html))
     },
     before(html) {
+      const jk = JackKnife(html)
+      html = jk.html()
+      if (html === '') return
       $.forEach((elem) => (elem.outerHTML = html + elem.outerHTML))
     },
     append(html) {
+      const jk = JackKnife(html)
+      html = jk.html()
+      if (html === '') return
       $.forEach((elem) => (elem.innerHTML += html))
     },
     prepend(html) {
+      const jk = JackKnife(html)
+      html = jk.html()
+      if (html === '') return
       $.forEach((elem) => (elem.innerHTML = html + elem.innerHTML))
     },
     replaceWith(selector) {
