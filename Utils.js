@@ -25,9 +25,9 @@ function JackKnife(selector) {
     } else {
       selector()
     }
-  } else {
-    $ = []
   }
+
+  if ($ === undefined) $ = []
 
   return {
     length: $.length,
