@@ -14,7 +14,11 @@ function JackKnife(selector) {
   } else if (selector instanceof JackKnife) {
     return selector
   } else if (typeof selector === 'function') {
-    return document.addEventListener('DOMContentLoaded', selector)
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', selector)
+    } else {
+      selector()
+    }
   }
 
   if ($.length < 1) return
