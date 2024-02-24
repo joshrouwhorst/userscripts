@@ -37,13 +37,13 @@ function JackKnife(selector) {
       selections: $,
     },
     first() {
-      return $.length > 0 ? JackKnife($[0]) : null
+      return $.length > 0 ? JackKnife($[0]) : JackKnife()
     },
     last() {
-      return $.length > 0 ? JackKnife($[$.length - 1]) : null
+      return $.length > 0 ? JackKnife($[$.length - 1]) : JackKnife()
     },
     nth(index) {
-      return $.length > 0 ? JackKnife($[index]) : null
+      return $.length > 0 ? JackKnife($[index]) : JackKnife()
     },
     get(index) {
       if (index === undefined) return $.length > 0 ? $[0] : null
@@ -120,7 +120,9 @@ function JackKnife(selector) {
       $.forEach((elem) => elem.addEventListener('change', func))
     },
     find(selector) {
-      return $.length > 0 ? JackKnife($[0].querySelectorAll(selector)) : null
+      return $.length > 0
+        ? JackKnife($[0].querySelectorAll(selector))
+        : JackKnife()
     },
     trigger(event) {
       $.forEach((elem) => elem.dispatchEvent(new Event(event)))
@@ -139,22 +141,22 @@ function JackKnife(selector) {
       $.forEach((elem) => (elem.style[name] = value))
     },
     parent() {
-      return $.length > 0 ? JackKnife($[0].parentNode) : null
+      return $.length > 0 ? JackKnife($[0].parentNode) : JackKnife()
     },
     children() {
-      return $.length > 0 ? JackKnife($[0].children) : null
+      return $.length > 0 ? JackKnife($[0].children) : JackKnife()
     },
     next() {
-      return $.length > 0 ? JackKnife($[0].nextElementSibling) : null
+      return $.length > 0 ? JackKnife($[0].nextElementSibling) : JackKnife()
     },
     prev() {
-      return $.length > 0 ? JackKnife($[0].previousElementSibling) : null
+      return $.length > 0 ? JackKnife($[0].previousElementSibling) : JackKnife()
     },
     closest(selector) {
-      return $.length > 0 ? JackKnife($[0].closest(selector)) : null
+      return $.length > 0 ? JackKnife($[0].closest(selector)) : JackKnife()
     },
     clone() {
-      return $.length > 0 ? JackKnife($[0].cloneNode(true)) : null
+      return $.length > 0 ? JackKnife($[0].cloneNode(true)) : JackKnife()
     },
     html(html) {
       if (html === undefined) return $.length > 0 ? $[0].innerHTML : ''
