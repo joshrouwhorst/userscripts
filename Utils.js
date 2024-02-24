@@ -140,7 +140,7 @@ const jk_Utils = {
     })
   },
   Load(func) {
-    if (document.readyState === 'complete') return func()
+    if (document.readyState !== 'loading') return func()
     document.addEventListener('DOMContentLoaded', func)
   },
   $(selector) {
