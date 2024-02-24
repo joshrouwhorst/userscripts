@@ -2,7 +2,7 @@
 // @name         Bible Gateway
 // @namespace    https://joshr.work/
 // @homepageURL  https://joshr.work/
-// @version      1.0.34
+// @version      1.0.35
 // @author       Josh
 // @match        *://*.biblegateway.com/passage/*
 // @icon         https://biblegateway.com/favicon.ico
@@ -18,7 +18,7 @@ try {
   const AD_SELECTORS = [
     '.sys-announce-content',
     '.sys-announce',
-    '.bg-popup-root',
+    //'.bg-popup-root',
     '.passage-bottom-ad',
     '.sponsor-ad',
     '.bottom-ad',
@@ -41,7 +41,7 @@ try {
 
     addHeader()
     RemoveAds(AD_SELECTORS)
-    addTranslationSearch()
+    //addTranslationSearch()
   })
 
   function stripText() {

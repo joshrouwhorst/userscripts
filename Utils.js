@@ -133,7 +133,7 @@ const jk_Utils = {
   },
   Is(elems, selector) {
     if (!Array.isArray(elems) && !(elems instanceof NodeList)) elems = [elems]
-    return elems.all((elem) => elem.matches(selector))
+    return elems.every((elem) => elem.matches(selector))
   },
   CSS(elems, styles) {
     if (!Array.isArray(elems) && !(elems instanceof NodeList)) elems = [elems]
