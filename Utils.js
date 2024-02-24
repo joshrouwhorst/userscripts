@@ -29,7 +29,7 @@ function JackKnife(selector) {
 
   if ($ === undefined) $ = []
 
-  JackKnife.prototype = {
+  this.prototype = {
     length: $.length,
     _meta: {
       selections: $,
