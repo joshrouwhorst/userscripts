@@ -27,12 +27,14 @@ function JackKnife(selector) {
     } else {
       selector()
     }
+  } else {
+    $ = []
   }
 
   return {
     length: $.length,
     _meta: {
-      selectors: $,
+      selections: $,
     },
     first() {
       return JackKnife($[0])
@@ -81,7 +83,7 @@ function JackKnife(selector) {
     },
     replaceWith(selector) {
       const jk = JackKnife(selector)
-      $.forEach((elem) => (elem.outerHTML = jk._meta.selectors[0].outerHTML))
+      $.forEach((elem) => (elem.outerHTML = jk._meta.selections[0].outerHTML))
     },
     replace(selector) {
       const jk = JackKnife(selector)
