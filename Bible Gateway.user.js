@@ -2,7 +2,7 @@
 // @name         Bible Gateway
 // @namespace    https://joshr.work/
 // @homepageURL  https://joshr.work/
-// @version      1.0.13
+// @version      1.0.14
 // @author       Josh
 // @match        *://*.biblegateway.com/passage/*
 // @icon         https://biblegateway.com/favicon.ico
@@ -40,8 +40,6 @@ try {
     else if (mode === 'Quote') convertToQuote()
 
     addHeader()
-    Log('Utils')
-    Obj(Utils)
     RemoveAds(AD_SELECTORS)
     addTranslationSearch()
   })
