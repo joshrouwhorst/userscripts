@@ -143,6 +143,19 @@ const jk_Utils = {
   Replace(oldElem, newElem) {
     oldElem.parentNode.replaceChild(newElem, oldElem)
   },
+  Before(reference, newItem) {
+    reference = jk_StandardizeElems(reference)
+    reference.forEach((ref) => {
+      ref.parentNode.insertBefore(newItem, ref)
+    })
+  },
+  After(reference, newItem) {
+    reference = jk_StandardizeElems(reference)
+    reference.forEach((ref) => {
+      if (ref.nextSibling) ref.parentNode.insertBefore(newItem, ref.nextSibling)
+      else ref.parentNode.appendChild(newItem)
+    })
+  },
   On(elem, event, func) {
     elem.addEventListener(event, func)
   },
