@@ -2,16 +2,16 @@
 // @name         Reddit
 // @namespace    https://joshr.work/
 // @homepageURL  https://joshr.work/
-// @version      1.0.39
+// @version      1.0.40
 // @author       Josh
 // @match        *://*.reddit.com/*
 // @icon         https://www.redditstatic.com/shreddit/assets/favicon/192x192.png
-// @require      https://raw.githubusercontent.com/joshrouwhorst/userscripts/main/Utils.js
+// @require      https://raw.githubusercontent.com/joshrouwhorst/userscripts/main/_JackKnife.js
 // ==/UserScript==
 
 if (jk_DEBUG('reddit')) debugger
 
-const { RemoveAds, Load } = jk_Utils
+const { RemoveAds, Load } = JackKnife
 
 const AD_SELECTORS = ['shreddit-ad-post', '.promotedlink']
 

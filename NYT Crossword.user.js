@@ -2,16 +2,16 @@
 // @name         NYT Crossword
 // @namespace    https://joshr.work/
 // @homepageURL  https://joshr.work/
-// @version      1.0.39
+// @version      1.0.40
 // @author       Josh
 // @match        *://*.nytcrosswordanswers.org/*
 // @icon         https://nytcrosswordanswers.org/wp-content/uploads/2023/05/cropped-nyt-logo-192x192.jpg
-// @require      https://raw.githubusercontent.com/joshrouwhorst/userscripts/main/Utils.js
+// @require      https://raw.githubusercontent.com/joshrouwhorst/userscripts/main/_JackKnife.js
 // ==/UserScript==
 
 if (jk_DEBUG('nyt.crossword')) debugger
 
-const { Log, OnLocationChange, RemoveAds, Load } = jk_Utils
+const { Log, OnLocationChange, RemoveAds, Load } = JackKnife
 
 Load(() => {
   OnLocationChange(() => run())

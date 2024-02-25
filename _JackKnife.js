@@ -8,7 +8,7 @@ function jk_StandardizeElems(elems) {
   return elems
 }
 
-const jk_Utils = {
+const JackKnife = {
   Log(text) {
     console.log(`%cUS | ${text}`, 'font-weight: bold;')
   },
@@ -75,7 +75,7 @@ const jk_Utils = {
         const body = document.querySelector('body')
         const observer = new MutationObserver((mutations) => {
           if (oldHref !== document.location.href) {
-            jk_Utils.Log(`Location Change: ${document.location.href}`)
+            JackKnife.Log(`Location Change: ${document.location.href}`)
             oldHref = document.location.href
             func(document.location.href)
           }
@@ -85,8 +85,8 @@ const jk_Utils = {
 
       window.onload = observeUrlChange
     } catch (err) {
-      jk_Utils.Err('Error observing location change')
-      jk_Utils.Obj(err)
+      JackKnife.Err('Error observing location change')
+      JackKnife.Obj(err)
     }
 
     func(document.location.href)
@@ -103,7 +103,7 @@ const jk_Utils = {
       }
     })
 
-    setTimeout(() => jk_Utils.RemoveAds(selectors, loopTime), loopTime)
+    setTimeout(() => JackKnife.RemoveAds(selectors, loopTime), loopTime)
   },
   MakeElement(html) {
     // Takes string of HTML and returns a DOM element

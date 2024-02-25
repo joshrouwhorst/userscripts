@@ -2,16 +2,16 @@
 // @name         Wikipedia
 // @namespace    https://joshr.work/
 // @homepageURL  https://joshr.work/
-// @version      1.0.39
+// @version      1.0.40
 // @author       Josh
 // @match        *://*.wikipedia.org/*
 // @icon         https://www.wikipedia.org/static/favicon/wikipedia.ico
-// @require      https://raw.githubusercontent.com/joshrouwhorst/userscripts/main/Utils.js
+// @require      https://raw.githubusercontent.com/joshrouwhorst/userscripts/main/_JackKnife.js
 // ==/UserScript==
 
 if (jk_DEBUG('wikipedia')) debugger
 
-const { Load, On, Remove, Replace, MakeElement } = jk_Utils
+const { Load, On, Remove, Replace, MakeElement } = JackKnife
 
 Load(() => {
   let mode = localStorage.getItem('mode')

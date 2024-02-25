@@ -2,11 +2,11 @@
 // @name         Youtube
 // @namespace    https://joshr.work/
 // @homepageURL  https://joshr.work/
-// @version      1.0.39
+// @version      1.0.40
 // @author       Josh
 // @match        *://*.youtube.com/*
 // @icon         https://www.youtube.com/s/desktop/54055272/img/favicon.ico
-// @require      https://raw.githubusercontent.com/joshrouwhorst/userscripts/main/Utils.js
+// @require      https://raw.githubusercontent.com/joshrouwhorst/userscripts/main/_JackKnife.js
 // ==/UserScript==
 
 if (jk_DEBUG('youtube')) debugger
@@ -29,7 +29,7 @@ const {
   Text,
   Before,
   Memory,
-} = jk_Utils
+} = JackKnife
 const LOOP_TIME = 500
 const MAX_TRIES = 10
 const MAX_SECONDS = 10

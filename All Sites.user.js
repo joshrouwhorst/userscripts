@@ -2,10 +2,10 @@
 // @name         All Sites
 // @namespace    https://joshr.work/
 // @homepageURL  https://joshr.work/
-// @version      1.0.39
+// @version      1.0.40
 // @author       Josh
 // @match        *://*/*
-// @require      https://raw.githubusercontent.com/joshrouwhorst/userscripts/main/Utils.js
+// @require      https://raw.githubusercontent.com/joshrouwhorst/userscripts/main/_JackKnife.js
 // ==/UserScript==
 
 if (jk_DEBUG('all.sites')) debugger
@@ -21,7 +21,7 @@ const COOKIE_BANNER_SELECTORS = [
 const MAX_LOOPS = 10
 const LOOP_TIME = 500
 
-const { Log, HasParam, $, Remove, Load } = jk_Utils
+const { Log, HasParam, $, Remove, Load } = JackKnife
 
 Load(() => {
   removeCookieBanners()

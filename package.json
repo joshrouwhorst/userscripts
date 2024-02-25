@@ -1,6 +1,6 @@
 {
   "name": "safari-userscripts",
-  "version": "1.0.39",
+  "version": "1.0.40",
   "description": "",
   "scripts": {
     "set-version": "node ./scripts/versioner.js",
