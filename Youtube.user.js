@@ -2,7 +2,7 @@
 // @name         Youtube
 // @namespace    https://joshr.work/
 // @homepageURL  https://joshr.work/
-// @version      1.0.41
+// @version      1.0.42
 // @author       Josh
 // @match        *://*.youtube.com/*
 // @icon         https://www.youtube.com/s/desktop/54055272/img/favicon.ico
@@ -177,16 +177,15 @@ function autoSkip() {
 
 function showDescription() {
   try {
-    // Before I put in the if statement here the script was causing
-    // the video settings to close every time it triggered
-    if (
-      $('#description tp-yt-paper-button#expand').length > 0 &&
-      $('#description-inline-expander[is-expanded]').length === 0
-    ) {
-      Trigger($('#description tp-yt-paper-button#expand'), 'click')
-    }
+    let moreBtn = $('#description tp-yt-paper-button#expand')
+    if (moreBtn.length > 0) moreBtn = moreBtn[0]
+    else moreBtn = null
 
-    if (new Date() - LOAD_START < MAX_SECONDS * 1000)
+    if (moreBtn && !moreBtn.hasAttribute('hidden')) {
+      Trigger(moreBtn, 'click')
+    } else if (moreBtn && moreBtn.hasAttribute('hidden')) {
+      Log('Description expanded')
+    } else if (new Date() - LOAD_START < MAX_SECONDS * 1000)
       setTimeout(() => showDescription(), LOOP_TIME)
   } catch (err) {
     Err('Error running YouTube Show Description')
