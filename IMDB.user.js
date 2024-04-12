@@ -37,10 +37,8 @@ function removeAds(selectors, loopTime) {
     else {
       const elements = document.querySelectorAll(selector)
       elements.forEach((element) => {
-        // Move element to the very end of the body
-        if (element._checked) return
-        document.body.appendChild(element)
-        element._checked = true
+        // Set element visibility to invisible
+        element.style.visibility = 'hidden'
       })
     }
   })
