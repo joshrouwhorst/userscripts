@@ -34,8 +34,8 @@ function removeAds(selectors, loopTime) {
     else {
       const elements = document.querySelectorAll(selector)
       elements.forEach((element) => {
-        // Set element opacity to 0
-        element.style.opacity = 0
+        // Move element to the very end of the body
+        document.body.appendChild(element)
       })
     }
   })
