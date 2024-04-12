@@ -2,11 +2,12 @@
 // @name         Bible Gateway
 // @namespace    https://joshr.work/
 // @homepageURL  https://joshr.work/
-// @version      1.0.47
+// @version      1.1.0
 // @author       Josh
 // @match        *://*.biblegateway.com/passage/*
 // @icon         https://biblegateway.com/favicon.ico
 // @require      https://raw.githubusercontent.com/joshrouwhorst/userscripts/main/_JackKnife.js
+// @downloadURL  https://raw.githubusercontent.com/joshrouwhorst/userscripts/main/Bible%20Gateway.user.js
 // ==/UserScript==
 
 if (jk_DEBUG('bible.gateway')) debugger

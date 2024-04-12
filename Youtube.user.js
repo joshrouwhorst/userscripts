@@ -1,12 +1,13 @@
 // ==UserScript==
-// @name         Youtube
+// @name         YouTube
 // @namespace    https://joshr.work/
 // @homepageURL  https://joshr.work/
-// @version      1.0.47
+// @version      1.1.0
 // @author       Josh
 // @match        *://*.youtube.com/*
 // @icon         https://www.youtube.com/s/desktop/54055272/img/favicon.ico
 // @require      https://raw.githubusercontent.com/joshrouwhorst/userscripts/main/_JackKnife.js
+// @downloadURL  https://raw.githubusercontent.com/joshrouwhorst/userscripts/main/Youtube.user.js
 // ==/UserScript==
 
 if (jk_DEBUG('youtube')) debugger

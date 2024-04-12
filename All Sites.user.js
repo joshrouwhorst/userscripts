@@ -2,10 +2,11 @@
 // @name         All Sites
 // @namespace    https://joshr.work/
 // @homepageURL  https://joshr.work/
-// @version      1.0.47
+// @version      1.1.0
 // @author       Josh
 // @match        *://*/*
 // @require      https://raw.githubusercontent.com/joshrouwhorst/userscripts/main/_JackKnife.js
+// @downloadURL  https://raw.githubusercontent.com/joshrouwhorst/userscripts/main/All%20Sites.user.js
 // ==/UserScript==
 
 if (jk_DEBUG('all.sites')) debugger
