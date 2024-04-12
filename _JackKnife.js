@@ -91,19 +91,27 @@ const JackKnife = {
 
     func(document.location.href)
   },
-  RemoveAds(selectors, loopTime) {
+  HandleAds(selectors, loopTime, each) {
     if (!loopTime) loopTime = 500
     selectors.forEach((selector) => {
       if (typeof selector === 'function') selector()
       else {
         const elements = document.querySelectorAll(selector)
-        elements.forEach((element) => {
-          element.remove()
-        })
+        elements.forEach(each)
       }
     })
 
     setTimeout(() => JackKnife.RemoveAds(selectors, loopTime), loopTime)
+  },
+  RemoveAds(selectors, loopTime) {
+    return JackKnife.HandleAds(selectors, loopTime, (element) => {
+      element.remove()
+    })
+  },
+  HideAds(selectors, loopTime) {
+    return JackKnife.HandleAds(selectors, loopTime, (element) => {
+      element.style.visibility = 'hidden'
+    })
   },
   MakeElement(html) {
     // Takes string of HTML and returns a DOM element
