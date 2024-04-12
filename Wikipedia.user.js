@@ -2,7 +2,7 @@
 // @name         Wikipedia
 // @namespace    https://joshr.work/
 // @homepageURL  https://joshr.work/
-// @version      1.0.45
+// @version      1.0.46
 // @author       Josh
 // @match        *://*.wikipedia.org/*
 // @icon         https://www.wikipedia.org/static/favicon/wikipedia.ico

@@ -2,7 +2,7 @@
 // @name         Youtube
 // @namespace    https://joshr.work/
 // @homepageURL  https://joshr.work/
-// @version      1.0.45
+// @version      1.0.46
 // @author       Josh
 // @match        *://*.youtube.com/*
 // @icon         https://www.youtube.com/s/desktop/54055272/img/favicon.ico
