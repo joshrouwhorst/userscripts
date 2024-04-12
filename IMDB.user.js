@@ -11,7 +11,7 @@
 
 if (jk_DEBUG('imdb')) debugger
 
-const { Log, Obj, OnLocationChange, Load } = JackKnife
+const { Log, Obj, OnLocationChange, RemoveAds, Load } = JackKnife
 const LOOP_TIME = 500
 
 Load(() => {
@@ -20,7 +20,10 @@ Load(() => {
 
 function run() {
   Log('IMDB User Script Running...')
-  RemoveAds([
+
+  RemoveAds(['.ipc-promptable-dialog'])
+
+  removeAds([
     '[aria-label="Sponsored Content"]',
     '.nas-slot',
     '[data-testid="episodes-cards-container"]',
@@ -35,10 +38,12 @@ function removeAds(selectors, loopTime) {
       const elements = document.querySelectorAll(selector)
       elements.forEach((element) => {
         // Move element to the very end of the body
+        if (element._checked) return
         document.body.appendChild(element)
+        element._checked = true
       })
     }
   })
 
-  setTimeout(() => JackKnife.RemoveAds(selectors, loopTime), loopTime)
+  setTimeout(() => removeAds(selectors, loopTime), loopTime)
 }
