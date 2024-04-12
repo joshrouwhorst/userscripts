@@ -11,7 +11,7 @@
 
 if (jk_DEBUG('imdb')) debugger
 
-const { Log, Obj, OnLocationChange, RemoveAds, Load } = JackKnife
+const { Log, Obj, OnLocationChange, Load } = JackKnife
 const LOOP_TIME = 500
 
 Load(() => {
@@ -25,4 +25,20 @@ function run() {
     '.nas-slot',
     '[data-testid="episodes-cards-container"]',
   ])
+}
+
+function removeAds(selectors, loopTime) {
+  if (!loopTime) loopTime = 500
+  selectors.forEach((selector) => {
+    if (typeof selector === 'function') selector()
+    else {
+      const elements = document.querySelectorAll(selector)
+      elements.forEach((element) => {
+        // Set element opacity to 0
+        element.style.opacity = 0
+      })
+    }
+  })
+
+  setTimeout(() => JackKnife.RemoveAds(selectors, loopTime), loopTime)
 }
