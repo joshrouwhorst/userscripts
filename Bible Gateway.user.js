@@ -2,7 +2,7 @@
 // @name         Bible Gateway
 // @namespace    https://joshr.work/
 // @homepageURL  https://joshr.work/
-// @version      1.1.0
+// @version      1.1.1
 // @author       Josh
 // @match        *://*.biblegateway.com/passage/*
 // @icon         https://biblegateway.com/favicon.ico
@@ -14,6 +14,8 @@ if (jk_DEBUG('bible.gateway')) debugger
 
 try {
   const { Log, RemoveAds, Hide, Remove, $, MakeElement, On, Load } = JackKnife
+
+  const quickTranslations = ['NRSVUE', 'NIV', 'ESV', 'KJV', 'NKJV', 'NLT']
 
   const LOOP_TIME = 500
   const AD_SELECTORS = [
@@ -123,6 +125,43 @@ try {
 
     const passageText = document.querySelector('.passage-text')
     passageText.insertBefore(headerElem, passageText.firstChild)
+
+    const quickTranslationButtons = MakeElement(
+      '<div style="display: flex; justify-content: space-between; margin-top: 10px;"></div>'
+    )
+
+    const getCurrentUrlWithTranslation = (translation) => {
+      const url = window.location.href
+      const urlObj = new URL(url)
+      urlObj.searchParams.set('version', translation)
+      return urlObj.href
+    }
+
+    const getValueOfUrlParameter = (param) => {
+      const url = window.location.href
+      const urlObj = new URL(url)
+      return urlObj.searchParams.get(param)
+    }
+
+    quickTranslations.forEach((translation) => {
+      const url = getCurrentUrlWithTranslation(translation)
+      const isCurrentTranslation =
+        getValueOfUrlParameter('version').toLowerCase() ===
+        translation.toLowerCase()
+
+      const mainStyle =
+        'background-color: yellow; padding: 5px; border: 2px solid black; font-weight: bold; color: black;'
+      const currentStyle =
+        'background-color: black; padding: 5px; border: 2px solid yellow; font-weight: bold; color: black;'
+      const style = isCurrentTranslation ? currentStyle : mainStyle
+      const button = MakeElement(
+        `<a href="${url}" style="${style}">${translation}</a>`
+      )
+
+      quickTranslationButtons.appendChild(button)
+    })
+
+    passageText.insertBefore(quickTranslations, passageText.firstChild)
   }
 
   function addTranslationSearch() {
