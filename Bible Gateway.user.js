@@ -2,7 +2,7 @@
 // @name         Bible Gateway
 // @namespace    https://joshr.work/
 // @homepageURL  https://joshr.work/
-// @version      1.1.1
+// @version      1.1.2
 // @author       Josh
 // @match        *://*.biblegateway.com/passage/*
 // @icon         https://biblegateway.com/favicon.ico
@@ -161,7 +161,7 @@ try {
       quickTranslationButtons.appendChild(button)
     })
 
-    passageText.insertBefore(quickTranslations, passageText.firstChild)
+    passageText.insertBefore(quickTranslationButtons, passageText.firstChild)
   }
 
   function addTranslationSearch() {
