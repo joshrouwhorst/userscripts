@@ -2,7 +2,7 @@
 // @name         Bible Gateway
 // @namespace    https://joshr.work/
 // @homepageURL  https://joshr.work/
-// @version      1.1.2
+// @version      1.1.3
 // @author       Josh
 // @match        *://*.biblegateway.com/passage/*
 // @icon         https://biblegateway.com/favicon.ico
@@ -127,7 +127,7 @@ try {
     passageText.insertBefore(headerElem, passageText.firstChild)
 
     const quickTranslationButtons = MakeElement(
-      '<div style="display: flex; justify-content: space-between; margin-top: 10px;"></div>'
+      '<div style="margin: 10px 0;"></div>'
     )
 
     const getCurrentUrlWithTranslation = (translation) => {
@@ -150,9 +150,9 @@ try {
         translation.toLowerCase()
 
       const mainStyle =
-        'background-color: yellow; padding: 5px; border: 2px solid black; font-weight: bold; color: black;'
+        'background-color: yellow; padding: 5px; border: 2px solid black; font-weight: bold; color: black; margin-right: 5px;'
       const currentStyle =
-        'background-color: black; padding: 5px; border: 2px solid yellow; font-weight: bold; color: black;'
+        'background-color: black; padding: 5px; border: 2px solid yellow; font-weight: bold; color: black; margin-right: 5px;'
       const style = isCurrentTranslation ? currentStyle : mainStyle
       const button = MakeElement(
         `<a href="${url}" style="${style}">${translation}</a>`
