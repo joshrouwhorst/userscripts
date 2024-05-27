@@ -1,5 +1,16 @@
 # Userscripts
 
+## Links
+
+- [All Sites](https://github.com/joshrouwhorst/userscripts/raw/main/All%20Sites.user.js)
+- [Bible Gateway](https://github.com/joshrouwhorst/userscripts/raw/main/Bible%20Gateway.user.js)
+- [IMDB](https://github.com/joshrouwhorst/userscripts/raw/main/IMDB.user.js)
+- [NYT Crossword](https://github.com/joshrouwhorst/userscripts/raw/main/NYT%20Crossword.user.js)
+- [Reddit](https://github.com/joshrouwhorst/userscripts/raw/main/Reddit.user.js)
+- [StackOverflow](https://github.com/joshrouwhorst/userscripts/raw/main/StackOverflow.user.js)
+- [Wikipedia](https://github.com/joshrouwhorst/userscripts/raw/main/Wikipedia.user.js)
+- [YouTube](https://github.com/joshrouwhorst/userscripts/raw/main/Youtube.user.js)
+
 ## Maintenance
 
 1. Make changes to the appropriate script files.
