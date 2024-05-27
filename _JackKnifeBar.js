@@ -88,7 +88,12 @@ class JackKnifeBar {
 
     JackKnifeBar.buttons.forEach((btn) => makeBtn(btn))
 
-    makeBtn({ name: 'Close', func: () => JackKnifeBar.CloseBar() })
+    makeBtn({
+      name: '✖️',
+      func: () => {
+        if (confirm('Are you sure you want to close?')) JackKnifeBar.CloseBar()
+      },
+    })
 
     if (existingBar) {
       existingBar.replaceWith(bar)
