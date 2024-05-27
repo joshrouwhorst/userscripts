@@ -7,42 +7,33 @@
 // @match        *://*.wikipedia.org/*
 // @icon         https://www.wikipedia.org/static/favicon/wikipedia.ico
 // @require      https://raw.githubusercontent.com/joshrouwhorst/userscripts/main/_JackKnife.js
+// @require      https://raw.githubusercontent.com/joshrouwhorst/userscripts/main/_JackKnifeBar.js
 // @downloadURL  https://raw.githubusercontent.com/joshrouwhorst/userscripts/main/Wikipedia.user.js
 // ==/UserScript==
 
 if (jk_DEBUG('wikipedia')) debugger
 
 const { Load, On, Remove, Replace, MakeElement } = JackKnife
+const { AddButton } = _JackKnifeBar
 
 Load(() => {
   let mode = localStorage.getItem('mode')
-  const btnStyle =
-    'display: inline-block; padding: 5px; border: none; background-color: transparent; color: blue; text-decoration: underline; cursor: pointer;'
 
   if (mode == 'strip') {
     strip()
+    AddButton('View Regular', () => {
+      localStorage.setItem('mode', 'regular')
+      location.reload()
+    })
   } else {
-    $(`<button style='${btnStyle}'>Strip</button>`).forEach((item) => {
-      On(item, 'click', () => {
-        localStorage.setItem('mode', 'strip')
-        location.reload()
-      })
-
-      item.insertBefore($('#bodyContent')[0])
+    AddButton('Strip Text', () => {
+      localStorage.setItem('mode', 'strip')
+      location.reload()
     })
   }
 })
 
 function strip() {
-  $(`<button style='${btnStyle}'>Original</button>`).forEach((item) => {
-    On(item, 'click', () => {
-      localStorage.setItem('mode', 'default')
-      location.reload()
-    })
-
-    item.insertBefore($('#bodyContent')[0])
-  })
-
   Remove($('#bodyContent sup'))
 
   $('#bodyContent a').forEach((item) => {
@@ -51,28 +42,4 @@ function strip() {
 
     Replace(item, MakeElement(`<span>${$item.html()}</span>`))
   })
-
-  $('#right-navigation .vector-menu-content-list').forEach((item) => {
-    item.prepend(
-      MakeElement(
-        `<li class="mw-list-item collapsible"><a href="${normalUrl}"><span>Normal</span></a></li>`
-      )
-    )
-  })
-
-  $('#right-navigation .vector-menu-content-list').forEach((item) => {
-    item.prepend(
-      MakeElement(
-        `<li class="mw-list-item collapsible"><a href="${stripUrl}"><span>Strip</span></a></li>`
-      )
-    )
-  })
-
-  if (HasParam('osh.strip')) {
-    Remove($('#bodyContent sup'))
-
-    $('#bodyContent a').forEach((item) => {
-      Replace(item, MakeElement(`<span>${item.innerHTML}</span>`))
-    })
-  }
 }
