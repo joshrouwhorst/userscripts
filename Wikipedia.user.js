@@ -2,7 +2,7 @@
 // @name         Wikipedia
 // @namespace    https://joshr.work/
 // @homepageURL  https://joshr.work/
-// @version      1.1.6
+// @version      1.1.7
 // @author       Josh
 // @match        *://*.wikipedia.org/*
 // @icon         https://www.wikipedia.org/static/favicon/wikipedia.ico
@@ -13,10 +13,8 @@
 
 if (jk_DEBUG('wikipedia')) debugger
 
-const { Load, On, Remove, Replace, MakeElement } = JackKnife
-const { AddButton } = _JackKnifeBar
-
-const $ = (selector) => document.querySelectorAll(selector)
+const { Load, On, Remove, Replace, MakeElement, Select } = JackKnife
+const { AddButton } = JackKnifeBar
 
 Load(() => {
   let mode = localStorage.getItem('mode')
@@ -38,10 +36,7 @@ Load(() => {
 function strip() {
   Remove($('#bodyContent sup'))
 
-  $('#bodyContent a').forEach((item) => {
-    const $item = $(item)
-    $item.replaceWith(`<span>${$item.html()}</span>`)
-
+  Select('#bodyContent a').forEach((item) => {
     Replace(item, MakeElement(`<span>${$item.html()}</span>`))
   })
 }

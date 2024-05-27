@@ -1,4 +1,4 @@
-class _JackKnifeBar {
+class JackKnifeBar {
   static buttons = []
   static config = {
     barStyles: {

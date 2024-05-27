@@ -189,6 +189,9 @@ const JackKnife = {
     if (document.readyState !== 'loading') return func()
     document.addEventListener('DOMContentLoaded', func)
   },
+  Select(selector) {
+    return document.querySelectorAll(selector) || []
+  },
   $(selector) {
     return document.querySelectorAll(selector) || []
   },
