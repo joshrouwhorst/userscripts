@@ -6,7 +6,7 @@ class JackKnifeBar {
       bottom: '0',
       left: '0',
       width: '100%',
-      backgroundColor: 'rgba(0, 0, 0, 0.8)',
+      backgroundColor: 'black',
       display: 'flex',
       justifyContent: 'center',
       gap: '10px',
@@ -15,10 +15,11 @@ class JackKnifeBar {
     },
     buttonStyles: {
       padding: '5px 10px',
-      backgroundColor: 'rgba(255, 255, 255, 0.8)',
+      backgroundColor: 'yellow',
       border: 'none',
       borderRadius: '5px',
       cursor: 'pointer',
+      fontWeight: 'bold',
     },
   }
 
