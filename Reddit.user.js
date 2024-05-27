@@ -2,7 +2,7 @@
 // @name         Reddit
 // @namespace    https://joshr.work/
 // @homepageURL  https://joshr.work/
-// @version      1.1.7
+// @version      1.1.8
 // @author       Josh
 // @match        *://*.reddit.com/*
 // @icon         https://www.redditstatic.com/shreddit/assets/favicon/192x192.png

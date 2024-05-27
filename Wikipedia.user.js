@@ -2,7 +2,7 @@
 // @name         Wikipedia
 // @namespace    https://joshr.work/
 // @homepageURL  https://joshr.work/
-// @version      1.1.7
+// @version      1.1.8
 // @author       Josh
 // @match        *://*.wikipedia.org/*
 // @icon         https://www.wikipedia.org/static/favicon/wikipedia.ico
@@ -34,7 +34,7 @@ Load(() => {
 })
 
 function strip() {
-  Remove($('#bodyContent sup'))
+  Remove(Select('#bodyContent sup'))
 
   Select('#bodyContent a').forEach((item) => {
     Replace(item, MakeElement(`<span>${$item.html()}</span>`))
