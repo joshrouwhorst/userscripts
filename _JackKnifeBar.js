@@ -23,21 +23,21 @@ class JackKnifeBar {
   }
 
   static AddButton(name, func) {
-    _JackKnifeBar.buttons.push({ name, func })
-    _JackKnifeBar.CreateBar()
+    JackKnifeBar.buttons.push({ name, func })
+    JackKnifeBar.CreateBar()
   }
 
   static RemoveButton(name) {
-    _JackKnifeBar.buttons = _JackKnifeBar.buttons.filter(
+    JackKnifeBar.buttons = JackKnifeBar.buttons.filter(
       (button) => button.name !== name
     )
-    _JackKnifeBar.CreateBar()
+    JackKnifeBar.CreateBar()
   }
 
   static ReplaceButton(oldName, name, func) {
-    const idx = _JackKnifeBar.buttons.findIndex((b) => b.name === oldName)
-    _JackKnifeBar.buttons[idx] = { name, func }
-    _JackKnifeBar.CreateBar()
+    const idx = JackKnifeBar.buttons.findIndex((b) => b.name === oldName)
+    JackKnifeBar.buttons[idx] = { name, func }
+    JackKnifeBar.CreateBar()
   }
 
   static ShouldBarBeOpened() {
@@ -67,11 +67,11 @@ class JackKnifeBar {
   }
 
   static CreateBar() {
-    if (!_JackKnifeBar.ShouldBarBeOpened()) return
+    if (!JackKnifeBar.ShouldBarBeOpened()) return
 
     const existingBar = document.getElementById('jackKnifeBar') || null
     const bar = document.createElement('div')
-    const styles = _JackKnifeBar.config.barStyles
+    const styles = JackKnifeBar.config.barStyles
     Object.assign(bar.style, styles)
 
     bar.id = 'jackKnifeBar'
@@ -80,14 +80,14 @@ class JackKnifeBar {
       const btn = document.createElement('button')
       btn.textContent = button.name
       btn.addEventListener('click', button.func)
-      const btnStyles = _JackKnifeBar.config.buttonStyles
+      const btnStyles = JackKnifeBar.config.buttonStyles
       Object.assign(btn.style, btnStyles)
       bar.appendChild(btn)
     }
 
-    _JackKnifeBar.buttons.forEach((btn) => makeBtn(btn))
+    JackKnifeBar.buttons.forEach((btn) => makeBtn(btn))
 
-    makeBtn({ name: 'Close', func: () => _JackKnifeBar.CloseBar() })
+    makeBtn({ name: 'Close', func: () => JackKnifeBar.CloseBar() })
 
     if (existingBar) {
       existingBar.replaceWith(bar)
