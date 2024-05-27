@@ -2,7 +2,7 @@
 // @name         Wikipedia
 // @namespace    https://joshr.work/
 // @homepageURL  https://joshr.work/
-// @version      1.1.5
+// @version      1.1.6
 // @author       Josh
 // @match        *://*.wikipedia.org/*
 // @icon         https://www.wikipedia.org/static/favicon/wikipedia.ico
@@ -15,6 +15,8 @@ if (jk_DEBUG('wikipedia')) debugger
 
 const { Load, On, Remove, Replace, MakeElement } = JackKnife
 const { AddButton } = _JackKnifeBar
+
+const $ = (selector) => document.querySelectorAll(selector)
 
 Load(() => {
   let mode = localStorage.getItem('mode')
