@@ -2,7 +2,7 @@
 // @name         Wikipedia
 // @namespace    https://joshr.work/
 // @homepageURL  https://github.com/joshrouwhorst/userscripts/raw/main/Wikipedia.user.js
-// @version 1.1.26
+// @version 1.1.27
 // @author       Josh
 // @match        *://*.wikipedia.org/*
 // @icon         https://www.wikipedia.org/static/favicon/wikipedia.ico

@@ -1,9 +1,9 @@
 let _jackKnifeBarStyling = `
-:root {
+#jackKnifeBar {
   transition: 0.2s;
 }
 
-.bar {
+#jackKnifeBar .bar {
   position: fixed;
   bottom: 0;
   left: 0;
@@ -15,7 +15,7 @@ let _jackKnifeBarStyling = `
   z-index: 9999;
 }
 
-input, select, button {
+#jackKnifeBar input, #jackKnifeBar select, #jackKnifeBar button {
   padding: 5px 10px;
   background-color: yellow;
   border: none;
@@ -25,7 +25,7 @@ input, select, button {
   filter: transparency(0.1);
 }
 
-input:hover, select:hover, button:hover {
+#jackKnifeBar input:hover, #jackKnifeBar select:hover, #jackKnifeBar button:hover {
   filter: transparency(0);
 }
 `
