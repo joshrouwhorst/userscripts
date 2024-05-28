@@ -1,9 +1,9 @@
 let _jackKnifeBarStyling = `
-#jkbar {
+:root {
   transition: 0.2s;
 }
 
-#jkbar.bar {
+.bar {
   position: fixed;
   bottom: 0;
   left: 0;
@@ -15,7 +15,7 @@ let _jackKnifeBarStyling = `
   z-index: 9999;
 }
 
-#jkbar input, #jkbar select, #jkbar button {
+input, select, button {
   padding: 5px 10px;
   background-color: yellow;
   border: none;
@@ -25,7 +25,7 @@ let _jackKnifeBarStyling = `
   filter: transparency(0.1);
 }
 
-#jkbar input:hover, #jkbar select:hover, #jkbar button:hover {
+input:hover, select:hover, button:hover {
   filter: transparency(0);
 }
 `
@@ -110,8 +110,24 @@ class JackKnifeBar {
     if (!JackKnifeBar.ShouldBarBeOpened()) return
 
     // Remove old bar if it exists
-    let container = document.getElementById('jackKnifeBar') || null
-    if (container) container.remove()
+    let container = document.getElementById('jackKnifeBar')
+    //if (container) container.remove()
+    if (!container) {
+      // Create the container and shadow dom
+      container = document.createElement('div')
+      container.id = 'jackKnifeBar'
+      document.body.appendChild(container)
+      const shadowRoot = container.attachShadow({ mode: 'open' })
+      shadowRoot.appendChild(makeElement(_jackKnifeBarStyling))
+    }
+
+    if (!container.widgets) container.widgets = []
+
+    JackKnifeBar.widgets.forEach((widget) => {
+      if (!container.widgets.filter((w) => w.name === widget.name).length) {
+        container.widgets.push(widget)
+      }
+    })
 
     const makeElement = (html) => {
       // Takes string of HTML and returns a DOM element
@@ -119,13 +135,6 @@ class JackKnifeBar {
       temp.innerHTML = html
       return temp.firstChild
     }
-
-    // Create the container and shadow dom
-    container = document.createElement('div')
-    container.id = 'jackKnifeBar'
-    document.body.appendChild(container)
-    const shadowRoot = container.attachShadow({ mode: 'open' })
-    shadowRoot.appendChild(makeElement(_jackKnifeBarStyling))
 
     // Create the bar
     const bar = document.createElement('div')
@@ -190,7 +199,7 @@ class JackKnifeBar {
       }
     )
 
-    JackKnifeBar.widgets.forEach((btn) => makeWidget(btn))
+    container.widgets.forEach((btn) => makeWidget(btn))
 
     return bar
   }
