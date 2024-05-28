@@ -1,4 +1,5 @@
 class JackKnifeBar {
+  static shadowRoot = null
   static widgets = []
   static config = {
     barStyles: {
@@ -98,13 +99,23 @@ class JackKnifeBar {
   static CreateBar() {
     if (!JackKnifeBar.ShouldBarBeOpened()) return
 
-    const existingBar = document.getElementById('jackKnifeBar') || null
+    // Remove old bar if it exists
+    let container = document.getElementById('jackKnifeBar') || null
+    if (container) container.remove()
+
+    // Create the container and shadow dom
+    container = document.createElement('div')
+    container.id = 'jackKnifeBar'
+    document.body.appendChild(container)
+    const shadowRoot = container.attachShadow({ mode: 'open' })
+
+    // Create the bar
     const bar = document.createElement('div')
+    shadowRoot.appendChild(bar)
     const styles = JackKnifeBar.config.barStyles
     Object.assign(bar.style, styles)
 
-    bar.id = 'jackKnifeBar'
-
+    // Widget setup
     const makeBtn = (button, style) => {
       const btn = document.createElement('button')
       btn.textContent = button.name
@@ -147,6 +158,7 @@ class JackKnifeBar {
       }
     }
 
+    // Close button
     makeWidget(
       {
         name: '✖️',
@@ -165,12 +177,6 @@ class JackKnifeBar {
     )
 
     JackKnifeBar.widgets.forEach((btn) => makeWidget(btn))
-
-    if (existingBar) {
-      existingBar.replaceWith(bar)
-    } else {
-      document.body.appendChild(bar)
-    }
 
     return bar
   }
