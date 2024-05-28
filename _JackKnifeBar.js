@@ -113,12 +113,19 @@ class JackKnifeBar {
     let container = document.getElementById('jackKnifeBar') || null
     if (container) container.remove()
 
+    const makeElement = (html) => {
+      // Takes string of HTML and returns a DOM element
+      const temp = document.createElement('div')
+      temp.innerHTML = html
+      return temp.firstChild
+    }
+
     // Create the container and shadow dom
     container = document.createElement('div')
     container.id = 'jackKnifeBar'
-    container.appendChild(MakeElement(_jackKnifeBarStyling))
     document.body.appendChild(container)
     const shadowRoot = container.attachShadow({ mode: 'open' })
+    shadowRoot.appendChild(makeElement(_jackKnifeBarStyling))
 
     // Create the bar
     const bar = document.createElement('div')
