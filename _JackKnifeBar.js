@@ -1,4 +1,4 @@
-let _jackKnifeBarStyling = ```
+let _jackKnifeBarStyling = `
 :root {
   transition: 0.2s;
 }
@@ -28,7 +28,7 @@ input, select, button {
 input:hover, select:hover, button:hover {
   filter: transparency(0);
 }
-```
+`
 
 _jackKnifeBarStyling = `<style>${_jackKnifeBarStyling}</style>`
 
