@@ -8,7 +8,6 @@ class JackKnifeBar {
       width: '100%',
       backgroundColor: 'black',
       display: 'flex',
-      justifyContent: 'center',
       gap: '10px',
       padding: '10px',
       zIndex: '9999',
@@ -21,23 +20,49 @@ class JackKnifeBar {
       cursor: 'pointer',
       fontWeight: 'bold',
     },
+    dropdownStyles: {
+      padding: '5px 10px',
+      backgroundColor: 'yellow',
+      border: 'none',
+      borderRadius: '5px',
+      cursor: 'pointer',
+      fontWeight: 'bold',
+    },
   }
 
   static AddButton(name, func) {
-    JackKnifeBar.buttons.push({ name, func })
+    JackKnifeBar.widgets.push({ name, func, type: 'button' })
     JackKnifeBar.CreateBar()
   }
 
   static RemoveButton(name) {
-    JackKnifeBar.buttons = JackKnifeBar.buttons.filter(
+    JackKnifeBar.widgets = JackKnifeBar.widgets.filter(
       (button) => button.name !== name
     )
     JackKnifeBar.CreateBar()
   }
 
   static ReplaceButton(oldName, name, func) {
-    const idx = JackKnifeBar.buttons.findIndex((b) => b.name === oldName)
-    JackKnifeBar.buttons[idx] = { name, func }
+    const idx = JackKnifeBar.widgets.findIndex((b) => b.name === oldName)
+    JackKnifeBar.widgets[idx] = { name, func, type: 'button' }
+    JackKnifeBar.CreateBar()
+  }
+
+  static AddDropdown(name, options, func) {
+    JackKnifeBar.widgets.push({ name, options, func, type: 'dropdown' })
+    JackKnifeBar.CreateBar()
+  }
+
+  static RemoveDropdown(name) {
+    JackKnifeBar.widgets = JackKnifeBar.widgets.filter(
+      (wid) => wid.name !== name
+    )
+    JackKnifeBar.CreateBar()
+  }
+
+  static ReplaceDropdown(oldName, name, options, func) {
+    const idx = JackKnifeBar.widgets.findIndex((b) => b.name === oldName)
+    JackKnifeBar.widgets[idx] = { name, options, func, type: 'dropdown' }
     JackKnifeBar.CreateBar()
   }
 
@@ -77,23 +102,69 @@ class JackKnifeBar {
 
     bar.id = 'jackKnifeBar'
 
-    const makeBtn = (button) => {
+    const makeBtn = (button, style) => {
       const btn = document.createElement('button')
       btn.textContent = button.name
       btn.addEventListener('click', button.func)
-      const btnStyles = JackKnifeBar.config.buttonStyles
+      const btnStyles = style || JackKnifeBar.config.buttonStyles
       Object.assign(btn.style, btnStyles)
       bar.appendChild(btn)
     }
 
-    JackKnifeBar.buttons.forEach((btn) => makeBtn(btn))
+    const makeDropdown = (dropdown, style) => {
+      const select = document.createElement('select')
+      const currentValue =
+        localStorage.getItem(dropdown.name) || dropdown.options[0]
 
-    makeBtn({
-      name: '✖️',
-      func: () => {
-        if (confirm('Are you sure you want to close?')) JackKnifeBar.CloseBar()
+      select.addEventListener('change', (event) => {
+        localStorage.setItem(dropdown.name, select.value)
+        dropdown.func(select.value, event)
+      })
+
+      dropdown.options.forEach((option) => {
+        const opt = document.createElement('option')
+        opt.textContent = option
+        select.appendChild(opt)
+        if (option === currentValue) select.value = option
+      })
+
+      const selectStyles = style || JackKnifeBar.config.dropdownStyles
+      Object.assign(select.style, selectStyles)
+      bar.appendChild(select)
+
+      // Provide the current value immediately, for onload purposes.
+      dropdown.func(currentValue)
+    }
+
+    const makeWidget = (widget, style) => {
+      switch (widget.type) {
+        case 'button':
+          makeBtn(widget, style)
+          break
+        case 'dropdown':
+          makeDropdown(widget, style)
+          break
+      }
+    }
+
+    makeWidget(
+      {
+        name: '✖️',
+        func: () => {
+          if (confirm('Are you sure you want to close?'))
+            JackKnifeBar.CloseBar()
+        },
+        type: 'button',
       },
-    })
+      {
+        backgroundColor: 'black',
+        color: 'yellow',
+        border: '2px solid yellow',
+        fontWeight: 'bold',
+      }
+    )
+
+    JackKnifeBar.widgets.forEach((btn) => makeWidget(btn))
 
     if (existingBar) {
       existingBar.replaceWith(bar)

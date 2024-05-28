@@ -2,11 +2,12 @@
 // @name         Bible Gateway
 // @namespace    https://joshr.work/
 // @homepageURL  https://joshr.work/
-// @version      1.1.13
+// @version      1.1.14
 // @author       Josh
 // @match        *://*.biblegateway.com/passage/*
 // @icon         https://biblegateway.com/favicon.ico
 // @require      https://raw.githubusercontent.com/joshrouwhorst/userscripts/main/_JackKnife.js
+// @require      https://raw.githubusercontent.com/joshrouwhorst/userscripts/main/_JackKnifeBar.js
 // @downloadURL  https://raw.githubusercontent.com/joshrouwhorst/userscripts/main/Bible%20Gateway.user.js
 // ==/UserScript==
 
@@ -14,6 +15,36 @@ if (jk_DEBUG('bible.gateway')) debugger
 
 try {
   const { Log, RemoveAds, Hide, Remove, $, MakeElement, On, Load } = JackKnife
+  const { AddButton, AddDropdown } = JackKnifeBar
+
+  const views = [
+    {
+      name: 'Regular',
+      func: (elem) => {},
+    },
+    {
+      name: 'Strip',
+      func: (elem) => {
+        Remove($('sup.footnote', elem))
+        Remove($('sup.versenum', elem))
+        Remove($('span.chapternum', elem))
+      },
+    },
+    {
+      name: 'Quote',
+      func: (elem) => {
+        Remove($('sup.footnote', elem))
+        Remove($('sup.versenum', elem))
+        Remove($('span.chapternum', elem))
+
+        $('.passage-text p:not(.spacer)', elem).forEach((paragraph) => {
+          const spacer = document.createElement('p')
+          paragraph.after(spacer)
+          paragraph.prepend('> ')
+        })
+      },
+    },
+  ]
 
   const quickTranslations = ['NRSVUE', 'NIV', 'ESV', 'KJV', 'NKJV', 'NLT']
 
@@ -42,33 +73,29 @@ try {
     else if (mode === 'Markup') addMarkup()
     else if (mode === 'Quote') convertToQuote()
 
-    addHeader()
+    setupViews()
+    addBar()
     RemoveAds(AD_SELECTORS)
     //addTranslationSearch()
   })
 
-  function stripText() {
-    Remove($('sup.footnote'))
+  // Setup the different views on load then choose which one to show at a given time.
+  function setupViews() {
+    const main = $('.passage-text')
 
-    Remove($('sup.versenum'))
-
-    Remove($('span.chapternum'))
-  }
-
-  function convertToQuote() {
-    Remove($('sup.footnote'))
-
-    Remove($('sup.versenum'))
-
-    Remove($('span.chapternum'))
-
-    $('.passage-text p:not(.spacer)').forEach((paragraph) => {
-      const spacer = document.createElement('p')
-      paragraph.after(spacer)
-      paragraph.prepend('> ')
+    views.forEach((view) => {
+      main.forEach((elem) => {
+        const clone = elem.cloneNode(true)
+        clone.id = `${view.name.toLowerCase()}-view`
+        view.func(clone)
+        clone.style.display = 'none'
+      })
     })
+
+    main.forEach((elem) => elem.remove())
   }
 
+  // Not currently being used. Might use it again later.
   function addMarkup() {
     const now = new Date()
     const quickSearchValue = $('.quick-search')[0]?.value
@@ -106,6 +133,31 @@ try {
     })
   }
 
+  function addBar() {
+    AddDropdown('Mode', [views.map((view) => view.name)], (value) => {
+      views.forEach((view) => {
+        const elem = $(`#${view.name.toLowerCase()}-view`)[0]
+        if (view.name === value) elem.style.display = 'block'
+        else elem.style.display = 'none'
+      })
+    })
+
+    quickTranslations.forEach((translation) => {
+      AddButton(translation, () => {
+        const url = getCurrentUrlWithTranslation(translation)
+        window.location.href = url
+      })
+    })
+
+    const getCurrentUrlWithTranslation = (translation) => {
+      const url = window.location.href
+      const urlObj = new URL(url)
+      urlObj.searchParams.set('version', translation)
+      return urlObj.href
+    }
+  }
+
+  // Not currently using this. Might use it again later.
   function addHeader() {
     const drop = MakeElement(
       '<select style="background-color: yellow; padding: 5px; border: 2px solid black; font-weight: bold; color: black; filter: none;"><option>Regular</option><option>Strip</option><option>Quote</option><option>Markdown</option></select>'

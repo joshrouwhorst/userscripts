@@ -189,10 +189,18 @@ const JackKnife = {
     if (document.readyState !== 'loading') return func()
     document.addEventListener('DOMContentLoaded', func)
   },
-  Select(selector) {
-    return document.querySelectorAll(selector) || []
+  Select(selector, parent) {
+    if (parent) {
+      return parent.querySelectorAll(selector) || []
+    } else {
+      return document.querySelectorAll(selector) || []
+    }
   },
-  $(selector) {
-    return document.querySelectorAll(selector) || []
+  $(selector, parent) {
+    if (parent) {
+      return parent.querySelectorAll(selector) || []
+    } else {
+      return document.querySelectorAll(selector) || []
+    }
   },
 }
