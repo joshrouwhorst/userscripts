@@ -135,7 +135,9 @@ try {
   }
 
   function addBar() {
+    Log('Adding Bar')
     AddDropdown('Mode', [views.map((view) => view.name)], (value) => {
+      Log('Mode', value)
       views.forEach((view) => {
         const elem = $(`#${view.name.toLowerCase()}-view`)[0]
         if (view.name === value) elem.style.display = 'block'
