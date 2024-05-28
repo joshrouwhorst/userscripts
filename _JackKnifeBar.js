@@ -129,13 +129,6 @@ class JackKnifeBar {
       }
     })
 
-    const makeElement = (html) => {
-      // Takes string of HTML and returns a DOM element
-      const temp = document.createElement('div')
-      temp.innerHTML = html
-      return temp.firstChild
-    }
-
     // Create the bar
     const bar = document.createElement('div')
     bar.id = 'jkbar'
@@ -143,14 +136,14 @@ class JackKnifeBar {
     shadowRoot.appendChild(bar)
 
     // Widget setup
-    const makeBtn = (button, style) => {
+    const makeBtn = (button) => {
       const btn = document.createElement('button')
       btn.textContent = button.name
       btn.addEventListener('click', button.func)
       bar.appendChild(btn)
     }
 
-    const makeDropdown = (dropdown, style) => {
+    const makeDropdown = (dropdown) => {
       const select = document.createElement('select')
       const currentValue =
         localStorage.getItem(dropdown.name) || dropdown.options[0]
@@ -182,22 +175,13 @@ class JackKnifeBar {
     }
 
     // Close button
-    makeWidget(
-      {
-        name: 'X',
-        func: () => {
-          if (confirm('Are you sure you want to close?'))
-            JackKnifeBar.CloseBar()
-        },
-        type: 'button',
+    makeWidget({
+      name: 'X',
+      func: () => {
+        if (confirm('Are you sure you want to close?')) JackKnifeBar.CloseBar()
       },
-      {
-        backgroundColor: 'black',
-        color: 'yellow',
-        border: '2px solid yellow',
-        fontWeight: 'bold',
-      }
-    )
+      type: 'button',
+    })
 
     container.widgets.forEach((btn) => makeWidget(btn))
 
