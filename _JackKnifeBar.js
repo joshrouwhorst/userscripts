@@ -1,5 +1,5 @@
 class JackKnifeBar {
-  static buttons = []
+  static widgets = []
   static config = {
     barStyles: {
       position: 'fixed',
