@@ -1,35 +1,40 @@
+let _jackKnifeBarStyling = ```
+:root {
+  transition: 0.2s;
+}
+
+.bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: black;
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  z-index: 9999;
+}
+
+input, select, button {
+  padding: 5px 10px;
+  background-color: yellow;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  filter: transparency(0.1);
+}
+
+input:hover, select:hover, button:hover {
+  filter: transparency(0);
+}
+```
+
+_jackKnifeBarStyling = `<style>${_jackKnifeBarStyling}</style>`
+
 class JackKnifeBar {
   static shadowRoot = null
   static widgets = []
-  static config = {
-    barStyles: {
-      position: 'fixed',
-      bottom: '0',
-      left: '0',
-      width: '100%',
-      backgroundColor: 'black',
-      display: 'flex',
-      gap: '10px',
-      padding: '10px',
-      zIndex: '9999',
-    },
-    buttonStyles: {
-      padding: '5px 10px',
-      backgroundColor: 'yellow',
-      border: 'none',
-      borderRadius: '5px',
-      cursor: 'pointer',
-      fontWeight: 'bold',
-    },
-    dropdownStyles: {
-      padding: '5px 10px',
-      backgroundColor: 'yellow',
-      border: 'none',
-      borderRadius: '5px',
-      cursor: 'pointer',
-      fontWeight: 'bold',
-    },
-  }
 
   static AddButton(name, func) {
     JackKnifeBar.widgets.push({ name, func, type: 'button' })
@@ -111,22 +116,20 @@ class JackKnifeBar {
     // Create the container and shadow dom
     container = document.createElement('div')
     container.id = 'jackKnifeBar'
+    container.innerHTML = _jackKnifeBarStyling
     document.body.appendChild(container)
     const shadowRoot = container.attachShadow({ mode: 'open' })
 
     // Create the bar
     const bar = document.createElement('div')
+    bar.className = 'bar'
     shadowRoot.appendChild(bar)
-    const styles = JackKnifeBar.config.barStyles
-    Object.assign(bar.style, styles)
 
     // Widget setup
     const makeBtn = (button, style) => {
       const btn = document.createElement('button')
       btn.textContent = button.name
       btn.addEventListener('click', button.func)
-      const btnStyles = style || JackKnifeBar.config.buttonStyles
-      Object.assign(btn.style, btnStyles)
       bar.appendChild(btn)
     }
 
@@ -147,8 +150,6 @@ class JackKnifeBar {
         if (option === currentValue) select.value = option
       })
 
-      const selectStyles = style || JackKnifeBar.config.dropdownStyles
-      Object.assign(select.style, selectStyles)
       bar.appendChild(select)
     }
 
