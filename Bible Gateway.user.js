@@ -2,7 +2,7 @@
 // @name         Bible Gateway
 // @namespace    https://joshr.work/
 // @homepageURL  https://joshr.work/
-// @version      1.1.15
+// @version      1.1.16
 // @author       Josh
 // @match        *://*.biblegateway.com/passage/*
 // @icon         https://biblegateway.com/favicon.ico
@@ -87,8 +87,9 @@ try {
       main.forEach((elem) => {
         const clone = elem.cloneNode(true)
         clone.id = `${view.name.toLowerCase()}-view`
-        view.func(clone)
         clone.style.display = 'none'
+        view.func(clone)
+        elem.after(clone)
       })
     })
 
