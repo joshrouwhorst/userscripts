@@ -136,6 +136,7 @@ try {
 
   function addBar() {
     Log('Adding Bar')
+    debugger
     AddDropdown('Mode', [views.map((view) => view.name)], (value) => {
       Log('Mode', value)
       views.forEach((view) => {
