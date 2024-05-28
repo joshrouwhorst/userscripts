@@ -118,7 +118,7 @@ class JackKnifeBar {
 
     // Remove old bar if it exists
     let container = document.getElementById('jackKnifeBar')
-    let shadowRoot = container.shadowRoot
+    let shadowRoot = container?.shadowRoot
 
     //if (container) container.remove()
     if (!container) {
@@ -126,7 +126,7 @@ class JackKnifeBar {
       container = document.createElement('div')
       container.id = 'jackKnifeBar'
       document.body.appendChild(container)
-      const shadowRoot = container.attachShadow({ mode: 'open' })
+      shadowRoot = container.attachShadow({ mode: 'open' })
       shadowRoot.appendChild(makeElement(_jackKnifeBarStyling))
     }
 
