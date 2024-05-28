@@ -2,7 +2,7 @@
 // @name         Bible Gateway
 // @namespace    https://joshr.work/
 // @homepageURL  https://github.com/joshrouwhorst/userscripts/raw/main/Bible%20Gateway.user.js
-// @version 1.1.29
+// @version 1.1.30
 // @author       Josh
 // @match        *://*.biblegateway.com/passage/*
 // @icon         https://biblegateway.com/favicon.ico
@@ -135,12 +135,10 @@ try {
   }
 
   function addBar() {
-    Log('Adding Bar')
     AddDropdown(
       'Mode',
       views.map((view) => view.name),
       (value) => {
-        Log('Mode', value)
         views.forEach((view) => {
           const elem = $(`#${view.name.toLowerCase()}-view`)[0]
           if (view.name === value) elem.style.display = 'block'

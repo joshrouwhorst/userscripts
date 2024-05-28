@@ -116,7 +116,7 @@ class JackKnifeBar {
     // Create the container and shadow dom
     container = document.createElement('div')
     container.id = 'jackKnifeBar'
-    container.innerHTML = _jackKnifeBarStyling
+    container.appendChild(MakeElement(_jackKnifeBarStyling))
     document.body.appendChild(container)
     const shadowRoot = container.attachShadow({ mode: 'open' })
 
