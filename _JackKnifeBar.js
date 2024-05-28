@@ -1,9 +1,9 @@
 let _jackKnifeBarStyling = `
-#jackKnifeBar {
+#jkbar {
   transition: 0.2s;
 }
 
-#jackKnifeBar .bar {
+#jkbar.bar {
   position: fixed;
   bottom: 0;
   left: 0;
@@ -15,7 +15,7 @@ let _jackKnifeBarStyling = `
   z-index: 9999;
 }
 
-#jackKnifeBar input, #jackKnifeBar select, #jackKnifeBar button {
+#jkbar input, #jkbar select, #jkbar button {
   padding: 5px 10px;
   background-color: yellow;
   border: none;
@@ -25,7 +25,7 @@ let _jackKnifeBarStyling = `
   filter: transparency(0.1);
 }
 
-#jackKnifeBar input:hover, #jackKnifeBar select:hover, #jackKnifeBar button:hover {
+#jkbar input:hover, #jkbar select:hover, #jkbar button:hover {
   filter: transparency(0);
 }
 `
@@ -122,6 +122,7 @@ class JackKnifeBar {
 
     // Create the bar
     const bar = document.createElement('div')
+    bar.id = 'jkbar'
     bar.className = 'bar'
     shadowRoot.appendChild(bar)
 
