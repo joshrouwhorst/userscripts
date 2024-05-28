@@ -2,7 +2,7 @@
 // @name         All Sites
 // @namespace    https://joshr.work/
 // @homepageURL  https://joshr.work/
-// @version      1.1.18
+// @version 1.1.20
 // @author       Josh
 // @match        *://*/*
 // @require      https://raw.githubusercontent.com/joshrouwhorst/userscripts/main/_JackKnife.js

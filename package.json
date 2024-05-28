@@ -1,9 +1,9 @@
 {
   "name": "safari-userscripts",
-  "version": "1.1.18",
+  "version": "1.1.20",
   "description": "",
   "scripts": {
-    "set-version": "node ./scripts/versioner.js",
+    "set-version": "node ./scripts/increment.js",
     "push": "npm run set-version && git add -A && git commit -m 'update' && git push"
   },
   "keywords": [],
