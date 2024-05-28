@@ -27,5 +27,6 @@ files.forEach((file) => {
       `@version ${newVersion}`
     )
     fs.writeFileSync(file, updatedContent)
+    console.log(`Version updated in ${file} to ${newVersion}`)
   }
 })

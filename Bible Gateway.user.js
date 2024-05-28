@@ -2,7 +2,7 @@
 // @name         Bible Gateway
 // @namespace    https://joshr.work/
 // @homepageURL  https://joshr.work/
-// @version 1.1.22
+// @version 1.1.23
 // @author       Josh
 // @match        *://*.biblegateway.com/passage/*
 // @icon         https://biblegateway.com/favicon.ico
@@ -15,7 +15,7 @@ if (jk_DEBUG('bible.gateway')) debugger
 
 try {
   const { Log, RemoveAds, Hide, Remove, $, MakeElement, On, Load } = JackKnife
-  const { AddButton, AddDropdown } = JackKnifeBar
+  const { AddButton, AddDropdown, OpenBar } = JackKnifeBar
 
   const views = [
     {
@@ -162,6 +162,9 @@ try {
       urlObj.searchParams.set('version', translation)
       return urlObj.href
     }
+
+    // Make sure the bar is open by default
+    OpenBar()
   }
 
   // Not currently using this. Might use it again later.

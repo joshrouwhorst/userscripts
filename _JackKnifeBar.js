@@ -70,6 +70,11 @@ class JackKnifeBar {
     JackKnifeBar.CreateBar()
   }
 
+  static OpenBar() {
+    localStorage.setItem('jkbar', 'true')
+    JackKnifeBar.CreateBar()
+  }
+
   static ShouldBarBeOpened() {
     const urlParams = new URLSearchParams(window.location.search)
     if (urlParams.get('jkbar') === 'true') {
@@ -161,7 +166,7 @@ class JackKnifeBar {
     // Close button
     makeWidget(
       {
-        name: '✖️',
+        name: 'X',
         func: () => {
           if (confirm('Are you sure you want to close?'))
             JackKnifeBar.CloseBar()
