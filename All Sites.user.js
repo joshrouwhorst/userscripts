@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         All Sites
 // @namespace    https://joshr.work/
-// @homepageURL  https://joshr.work/
-// @version 1.1.25
+// @homepageURL  https://github.com/joshrouwhorst/userscripts/raw/main/All%20Sites.user.js
+// @version 1.1.26
 // @author       Josh
 // @match        *://*/*
 // @require      https://raw.githubusercontent.com/joshrouwhorst/userscripts/main/_JackKnife.js

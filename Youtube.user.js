@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         YouTube
 // @namespace    https://joshr.work/
-// @homepageURL  https://joshr.work/
-// @version 1.1.25
+// @homepageURL  https://github.com/joshrouwhorst/userscripts/raw/main/Youtube.user.js
+// @version 1.1.26
 // @author       Josh
 // @match        *://*.youtube.com/*
 // @icon         https://www.youtube.com/s/desktop/54055272/img/favicon.ico

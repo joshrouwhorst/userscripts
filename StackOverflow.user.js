@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         StackOverflow
 // @namespace    https://joshr.work/
-// @homepageURL  https://joshr.work/
-// @version 1.1.25
+// @homepageURL  https://github.com/joshrouwhorst/userscripts/raw/main/StackOverflow.user.js
+// @version 1.1.26
 // @author       Josh
 // @match        *://*.stackoverflow.com/*
 // @require      https://raw.githubusercontent.com/joshrouwhorst/userscripts/main/_JackKnife.js

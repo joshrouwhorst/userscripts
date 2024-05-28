@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         Wikipedia
 // @namespace    https://joshr.work/
-// @homepageURL  https://joshr.work/
-// @version 1.1.25
+// @homepageURL  https://github.com/joshrouwhorst/userscripts/raw/main/Wikipedia.user.js
+// @version 1.1.26
 // @author       Josh
 // @match        *://*.wikipedia.org/*
 // @icon         https://www.wikipedia.org/static/favicon/wikipedia.ico
