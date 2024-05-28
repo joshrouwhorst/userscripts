@@ -109,8 +109,17 @@ class JackKnifeBar {
   static CreateBar() {
     if (!JackKnifeBar.ShouldBarBeOpened()) return
 
+    const makeElement = (html) => {
+      // Takes string of HTML and returns a DOM element
+      const temp = document.createElement('div')
+      temp.innerHTML = html
+      return temp.firstChild
+    }
+
     // Remove old bar if it exists
     let container = document.getElementById('jackKnifeBar')
+    let shadowRoot = container.shadowRoot
+
     //if (container) container.remove()
     if (!container) {
       // Create the container and shadow dom
