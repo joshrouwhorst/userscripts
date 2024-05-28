@@ -2,10 +2,11 @@
 // @name         All Sites
 // @namespace    https://joshr.work/
 // @homepageURL  https://github.com/joshrouwhorst/userscripts/raw/main/All%20Sites.user.js
-// @version 1.1.28
+// @version 1.1.29
 // @author       Josh
 // @match        *://*/*
 // @require      https://raw.githubusercontent.com/joshrouwhorst/userscripts/main/_JackKnife.js
+// @require      https://raw.githubusercontent.com/joshrouwhorst/userscripts/main/_JackKnifeBar.js
 // @downloadURL  https://raw.githubusercontent.com/joshrouwhorst/userscripts/main/All%20Sites.user.js
 // ==/UserScript==
 
@@ -23,11 +24,40 @@ const MAX_LOOPS = 10
 const LOOP_TIME = 500
 
 const { Log, HasParam, $, Remove, Load } = JackKnife
+const { AddButton } = JackKnifeBar
 
 Load(() => {
+  handleAutoReload()
+  addBar()
   removeCookieBanners()
   siteInfo()
 })
+
+function addBar() {
+  AddButton('Stop Reload', () => {
+    localStorage.removeItem('autoReload')
+    location.reload()
+  })
+
+  AddButton('Auto Reload (30s)', () => {
+    localStorage.setItem('autoReload', '30')
+    location.reload()
+  })
+
+  AddButton('Auto Reload (10s)', () => {
+    localStorage.setItem('autoReload', '10')
+    location.reload()
+  })
+}
+
+function handleAutoReload() {
+  const autoReload = localStorage.getItem('autoReload')
+
+  if (autoReload) {
+    const seconds = parseInt(autoReload)
+    setTimeout(() => location.reload(), seconds * 1000)
+  }
+}
 
 function removeCookieBanners(loop) {
   if (HasParam('show.banners')) return
