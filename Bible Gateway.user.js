@@ -2,7 +2,7 @@
 // @name         Bible Gateway
 // @namespace    https://joshr.work/
 // @homepageURL  https://joshr.work/
-// @version 1.1.20
+// @version 1.1.21
 // @author       Josh
 // @match        *://*.biblegateway.com/passage/*
 // @icon         https://biblegateway.com/favicon.ico
@@ -136,14 +136,18 @@ try {
 
   function addBar() {
     Log('Adding Bar')
-    AddDropdown('Mode', [views.map((view) => view.name)], (value) => {
-      Log('Mode', value)
-      views.forEach((view) => {
-        const elem = $(`#${view.name.toLowerCase()}-view`)[0]
-        if (view.name === value) elem.style.display = 'block'
-        else elem.style.display = 'none'
-      })
-    })
+    AddDropdown(
+      'Mode',
+      views.map((view) => view.name),
+      (value) => {
+        Log('Mode', value)
+        views.forEach((view) => {
+          const elem = $(`#${view.name.toLowerCase()}-view`)[0]
+          if (view.name === value) elem.style.display = 'block'
+          else elem.style.display = 'none'
+        })
+      }
+    )
 
     quickTranslations.forEach((translation) => {
       AddButton(translation, () => {
