@@ -2,7 +2,7 @@
 // @name         Bible Gateway
 // @namespace    https://joshr.work/
 // @homepageURL  https://github.com/joshrouwhorst/userscripts/raw/main/Bible%20Gateway.user.js
-// @version 1.1.35
+// @version 1.1.36
 // @author       Josh
 // @match        *://*.biblegateway.com/passage/*
 // @icon         https://biblegateway.com/favicon.ico
@@ -48,7 +48,6 @@ try {
 
   const quickTranslations = ['NRSVUE', 'NIV', 'ESV', 'KJV', 'NKJV', 'NLT']
 
-  const LOOP_TIME = 500
   const AD_SELECTORS = [
     '.sys-announce-content',
     '.sys-announce',
@@ -69,14 +68,16 @@ try {
 
     const mode = localStorage.getItem('mode')
 
-    if (mode === 'Strip') stripText()
-    else if (mode === 'Markup') addMarkup()
-    else if (mode === 'Quote') convertToQuote()
+    for (let i = 0; i < views.length; i++) {
+      if (mode === views[i].name) {
+        views[i].func()
+        break
+      }
+    }
 
     setupViews()
     addBar()
     RemoveAds(AD_SELECTORS)
-    //addTranslationSearch()
   })
 
   // Setup the different views on load then choose which one to show at a given time.
@@ -94,44 +95,6 @@ try {
     })
 
     main.forEach((elem) => elem.remove())
-  }
-
-  // Not currently being used. Might use it again later.
-  function addMarkup() {
-    const now = new Date()
-    const quickSearchValue = $('.quick-search')[0]?.value
-    const stdText = $('.std-text')[0]
-
-    const div1 = document.createElement('div')
-    div1.innerHTML = `# ${quickSearchValue}`
-    stdText.insertBefore(div1, stdText.firstChild)
-
-    const div2 = document.createElement('div')
-    div2.innerHTML = `Added: ${now.toUTCString()}`
-    stdText.insertBefore(div2, stdText.firstChild)
-
-    const div3 = document.createElement('div')
-    div3.innerHTML = 'Tags: [[Bible Chapter]] [[Bible]]'
-    stdText.insertBefore(div3, stdText.firstChild)
-
-    const div4 = document.createElement('div')
-    div4.innerHTML = `[Web](${window.location.href})`
-    stdText.insertBefore(div4, stdText.firstChild)
-
-    document.querySelectorAll('sup.footnote').forEach((item) => {
-      const text = item.textContent.trim()
-      item.outerHTML = '**^** '
-    })
-
-    document.querySelectorAll('sup.versenum').forEach((item) => {
-      const text = item.textContent.trim()
-      item.outerHTML = `*${text}* `
-    })
-
-    document.querySelectorAll('span.chapternum').forEach((item) => {
-      const text = item.textContent.trim()
-      item.outerHTML = `**${text}** `
-    })
   }
 
   function addBar() {
@@ -163,104 +126,6 @@ try {
 
     // Make sure the bar is open by default
     OpenBar()
-  }
-
-  // Not currently using this. Might use it again later.
-  function addHeader() {
-    const drop = MakeElement(
-      '<select style="background-color: yellow; padding: 5px; border: 2px solid black; font-weight: bold; color: black; filter: none;"><option>Regular</option><option>Strip</option><option>Quote</option><option>Markdown</option></select>'
-    )
-
-    drop.value = localStorage.getItem('mode') || 'Regular'
-
-    On(drop, 'change', () => {
-      localStorage.setItem('mode', drop.value)
-      location.reload()
-    })
-
-    const headerElem = MakeElement(
-      '<div><label style="font-weight: bold; padding-right: 5px;">Mode:</label></div>'
-    )
-    headerElem.appendChild(drop)
-
-    const passageText = document.querySelector('.passage-text')
-    passageText.insertBefore(headerElem, passageText.firstChild)
-
-    const quickTranslationButtons = MakeElement(
-      '<div style="margin: 10px 0;"></div>'
-    )
-
-    const getCurrentUrlWithTranslation = (translation) => {
-      const url = window.location.href
-      const urlObj = new URL(url)
-      urlObj.searchParams.set('version', translation)
-      return urlObj.href
-    }
-
-    const getValueOfUrlParameter = (param) => {
-      const url = window.location.href
-      const urlObj = new URL(url)
-      return urlObj.searchParams.get(param)
-    }
-
-    quickTranslations.forEach((translation) => {
-      const url = getCurrentUrlWithTranslation(translation)
-      const isCurrentTranslation =
-        getValueOfUrlParameter('version').toLowerCase() ===
-        translation.toLowerCase()
-
-      const mainStyle =
-        'background-color: yellow; padding: 5px; border: 2px solid black; font-weight: bold; color: black; margin-right: 5px;'
-      const currentStyle =
-        'background-color: black; padding: 5px; border: 2px solid yellow; font-weight: bold; color: black; margin-right: 5px;'
-      const style = isCurrentTranslation ? currentStyle : mainStyle
-      const button = MakeElement(
-        `<a href="${url}" style="${style}">${translation}</a>`
-      )
-
-      quickTranslationButtons.appendChild(button)
-    })
-
-    passageText.insertBefore(quickTranslationButtons, passageText.firstChild)
-  }
-
-  function addTranslationSearch() {
-    const transLink = document.querySelector('.translation[role="button"]')
-    const search = document.getElementById('translation-search')
-
-    // Check if the dropdown exists and has not been fixed
-    if (transLink && !search) {
-      // Create the search text box
-      const box = MakeElement(
-        `<div><input type="text" id="translation-search" placeholder="Translation Search" style="width: 100%; padding: 5px; border: 2px solid black; background-color: yellow; font-weight: bold; color: black;" /></div>`
-      )
-      // Add text box
-      transLink.after(box)
-    }
-
-    // Check if the dropdown is showing
-    const dropdown = transLink.querySelector('.r-dropdown')
-    if (dropdown) {
-      // Filter the dropdown
-      const val = document
-        .getElementById('translation-search')
-        .value.toLowerCase()
-      const dropdownItems = dropdown.querySelectorAll('ul li')
-      if (val === '') {
-        dropdownItems.forEach((item) => (item.style.display = 'block'))
-      } else {
-        dropdownItems.forEach((item) => {
-          const text = item.textContent.toLowerCase()
-          if (text.includes(val)) {
-            item.style.display = 'block'
-          } else {
-            item.style.display = 'none'
-          }
-        })
-      }
-    }
-
-    setTimeout(addTranslationSearch, LOOP_TIME)
   }
 } catch (err) {
   console.error('US | Error', err)

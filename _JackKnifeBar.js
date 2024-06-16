@@ -197,3 +197,29 @@ class JackKnifeBar {
     return bar
   }
 }
+
+class JackKnifePopup {
+  Open(body) {
+    const shadowRoot = this.shadowRoot
+    const popup = document.createElement('div')
+    popup.id = 'jackKnifePopup'
+    popup.className = 'popup'
+    shadowRoot.appendChild(popup)
+
+    const closeBtn = document.createElement('button')
+    closeBtn.textContent = 'X'
+    closeBtn.addEventListener('click', () => {
+      popup.remove()
+    })
+    popup.appendChild(closeBtn)
+
+    const content = document.createElement('div')
+    content.className = 'content'
+    content.innerHTML = body
+    popup.appendChild(content)
+
+    return popup
+  }
+
+  // Function that takes an object and outputs its attributes as html.
+}

@@ -2,7 +2,7 @@
 // @name         IMDB
 // @namespace    https://joshr.work/
 // @homepageURL  https://github.com/joshrouwhorst/userscripts/raw/main/IMDB.user.js
-// @version 1.1.35
+// @version 1.1.36
 // @author       Josh
 // @match        *://*.imdb.com/*
 // @icon         https://m.media-amazon.com/images/G/01/imdb/images-ANDW73HA/favicon_iPhone_retina_180x180._CB1582158069_.png
