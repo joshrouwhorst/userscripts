@@ -57,9 +57,10 @@ class JackKnifeBar {
   static AddDropdown(name, options, func) {
     JackKnifeBar.widgets.push({ name, options, func, type: 'dropdown' })
     JackKnifeBar.CreateBar()
-    const currentValue = localStorage.getItem(name) || options[0]
+
     // Provide the current value immediately, for onload purposes.
-    func(currentValue)
+    const value = localStorage.getItem(name) || options[0]
+    func(value)
   }
 
   static RemoveDropdown(name) {

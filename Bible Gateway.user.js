@@ -2,7 +2,7 @@
 // @name         Bible Gateway
 // @namespace    https://joshr.work/
 // @homepageURL  https://github.com/joshrouwhorst/userscripts/raw/main/Bible%20Gateway.user.js
-// @version 1.1.36
+// @version 1.1.37
 // @author       Josh
 // @match        *://*.biblegateway.com/passage/*
 // @icon         https://biblegateway.com/favicon.ico
@@ -63,17 +63,7 @@ try {
 
   Load(() => {
     Log('Bible Gateway User Script Running...')
-
     Hide($('.resources'))
-
-    const mode = localStorage.getItem('mode')
-
-    for (let i = 0; i < views.length; i++) {
-      if (mode === views[i].name) {
-        views[i].func()
-        break
-      }
-    }
 
     setupViews()
     addBar()
@@ -98,6 +88,8 @@ try {
   }
 
   function addBar() {
+    const mode = localStorage.getItem('mode')
+
     AddDropdown(
       'Mode',
       views.map((view) => view.name),

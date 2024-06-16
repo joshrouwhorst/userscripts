@@ -2,7 +2,7 @@
 // @name         StackOverflow
 // @namespace    https://joshr.work/
 // @homepageURL  https://github.com/joshrouwhorst/userscripts/raw/main/StackOverflow.user.js
-// @version 1.1.36
+// @version 1.1.37
 // @author       Josh
 // @match        *://*.stackoverflow.com/*
 // @require      https://raw.githubusercontent.com/joshrouwhorst/userscripts/main/_JackKnife.js
