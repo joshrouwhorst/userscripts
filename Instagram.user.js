@@ -2,7 +2,7 @@
 // @name         Instagram
 // @namespace    https://joshr.work/
 // @homepageURL  https://github.com/joshrouwhorst/userscripts/raw/main/Instagram.user.js
-// @version 1.1.42
+// @version 1.1.43
 // @author       Josh
 // @match        *://*.instagram.com/*
 // @icon         https://logos-world.net/wp-content/uploads/2020/06/Instagram-Logo.png
@@ -35,6 +35,7 @@ function getRidOfAds() {
       if (span.innerText.toLowerCase().trim() === 'sponsored') {
         Log('Ad removed')
         article.style.opacity = 0
+        article.style.height = 0
         isSponsored = true
         break
       }
