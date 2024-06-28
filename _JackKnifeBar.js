@@ -200,24 +200,75 @@ class JackKnifeBar {
 }
 
 class JackKnifePopup {
-  Open(body) {
+  Open({ title, body }) {
     const shadowRoot = this.shadowRoot
     const popup = document.createElement('div')
     popup.id = 'jackKnifePopup'
     popup.className = 'popup'
     shadowRoot.appendChild(popup)
 
-    const closeBtn = document.createElement('button')
-    closeBtn.textContent = 'X'
-    closeBtn.addEventListener('click', () => {
+    popup.innerHTML = ```
+      <style>
+        .popup-ui {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0, 0, 0, 0.5);
+          z-index: 9999;
+        }
+
+        header {
+          display: flex;
+          justify-content: space-between;
+          padding: 10px;
+          background-color: black;
+          color: white;
+        }
+
+        .content {
+          padding: 20px;
+          background-color: white;
+          color: black;
+        }
+
+        button {
+          background-color: transparent;
+          border: none;
+          color: white;
+          font-weight: bold;
+          cursor: pointer;
+        }
+
+        button:hover {
+          color: yellow;
+        }
+
+        button:active {
+          transform: scale(0.9);
+        }
+
+        button:focus {
+          outline: none;
+        }
+      </style>
+      <div class="popup-ui">
+        <header>
+          <h2>${title}</h2>
+          <button id="closeBtn">X</button>
+        </header>
+        
+        <div class="content">
+          ${body}
+        </div>
+
+      </div>
+    ```
+
+    document.getElementById('closeBtn').addEventListener('click', () => {
       popup.remove()
     })
-    popup.appendChild(closeBtn)
-
-    const content = document.createElement('div')
-    content.className = 'content'
-    content.innerHTML = body
-    popup.appendChild(content)
 
     return popup
   }

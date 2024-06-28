@@ -1,5 +1,45 @@
 # Userscripts
 
+## Debugging
+
+If you want to have a debugger called for a specific script, just add the `debug=` param to your URL. The value should be one of these:
+
+```text
+debug=all.sites
+```
+
+```text
+debug=bible.gateway
+```
+
+```text
+debug=imdb
+```
+
+```text
+debug=instagram
+```
+
+```text
+debug=nyt.crossword
+```
+
+```text
+debug=reddit
+```
+
+```text
+debug=stack.overflow
+```
+
+```text
+debug=wikipedia
+```
+
+```text
+debug=youtube
+```
+
 ## Links
 
 - [All Sites](https://github.com/joshrouwhorst/userscripts/raw/main/All%20Sites.user.js)
