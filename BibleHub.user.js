@@ -2,7 +2,7 @@
 // @name         BibleHub
 // @namespace    https://joshr.work/
 // @homepageURL  https://github.com/joshrouwhorst/userscripts/raw/main/BibleHub.user.js
-// @version 1.1.46
+// @version 1.1.47
 // @author       Josh
 // @match        *://*.biblehub.com/*
 // @icon         https://biblehub.com/favicon.ico
@@ -14,7 +14,7 @@
 if (jk_DEBUG('biblehub')) debugger
 
 try {
-  const { Log, RemoveAds, Remove, $, Load } = JackKnife
+  const { Log, RemoveAds, Remove, $, Load, Loop } = JackKnife
 
   const AD_SELECTORS = []
 
@@ -23,7 +23,7 @@ try {
 
   Load(() => {
     Log('BibleHub User Script Running...')
-
+    Loop(1000, () => removeIframes())
     RemoveAds(AD_SELECTORS)
   })
 

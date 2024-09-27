@@ -18,6 +18,11 @@ const JackKnife = {
       'font-weight: bold; background-color: red; color: white;'
     )
   },
+  Loop(interval, func) {
+    // Return false to stop the loop
+    var keepGoing = func() || true // Default to true
+    if (keepGoing) setTimeout(() => this.Loop(interval, func), interval)
+  },
   Memory(key, value) {
     if (value) localStorage.setItem(key, value)
     return localStorage.getItem(key)
