@@ -14,7 +14,7 @@ if (jk_DEBUG('biblehub')) debugger
 try {
   const { Log, RemoveAds, Remove, $, Load, Loop } = JackKnife
 
-  const AD_SELECTORS = ['#amp_floatingAdDiv']
+  const AD_SELECTORS = ['#amp_floatingAdDiv', '.bot2', '#mdd']
   let frameCount = 0
 
   // Checks the src attribute of the iframe to see if it contains a string from the ALLOWED_IFRAMES array

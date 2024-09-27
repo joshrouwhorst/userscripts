@@ -2,7 +2,7 @@
 // @name         StackOverflow
 // @namespace    https://joshr.work/
 // @homepageURL  https://github.com/joshrouwhorst/userscripts/raw/main/StackOverflow.user.js
-// @version 1.2.17
+// @version 1.2.18
 // @author       Josh
 // @match        *://*.stackoverflow.com/*
 // @icon         https://cdn2.iconfinder.com/data/icons/social-icons-color/512/stackoverflow-1024.png

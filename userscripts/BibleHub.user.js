@@ -2,7 +2,7 @@
 // @name         BibleHub
 // @namespace    https://joshr.work/
 // @homepageURL  https://github.com/joshrouwhorst/userscripts/raw/main/BibleHub.user.js
-// @version 1.2.17
+// @version 1.2.18
 // @author       Josh
 // @match        *://*.biblehub.com/*
 // @icon         https://biblehub.com/favicon.ico
@@ -108,7 +108,7 @@ if (jk_DEBUG('biblehub')) debugger
 try {
   const { Log, RemoveAds, Remove, $, Load, Loop } = JackKnife
 
-  const AD_SELECTORS = ['#amp_floatingAdDiv']
+  const AD_SELECTORS = ['#amp_floatingAdDiv', '.bot2', '#mdd']
   let frameCount = 0
 
   // Checks the src attribute of the iframe to see if it contains a string from the ALLOWED_IFRAMES array
