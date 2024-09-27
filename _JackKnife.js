@@ -8,9 +8,6 @@ function jk_StandardizeElems(elems) {
   return elems
 }
 
-// Effectively make JackKnife a singleton
-const JackKnife = new JackKnifeInstance()
-
 class JackKnifeInstance {
   Log(text) {
     console.log(`%cUS | ${text}`, 'font-weight: bold;')
@@ -238,3 +235,6 @@ class JackKnifeInstance {
     }
   }
 }
+
+// Effectively make JackKnife a singleton
+const JackKnife = new JackKnifeInstance()
