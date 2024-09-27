@@ -14,7 +14,7 @@ if (jk_DEBUG('biblehub')) debugger
 try {
   const { Log, RemoveAds, Remove, $, Load, Loop } = JackKnife
 
-  const AD_SELECTORS = []
+  const AD_SELECTORS = ['#amp_floatingAdDiv']
   let frameCount = 0
 
   // Checks the src attribute of the iframe to see if it contains a string from the ALLOWED_IFRAMES array
@@ -38,11 +38,27 @@ try {
         }
       }
 
+      // If the iframe is internal like the freakin' entire header of the site is, then we're going to allow it.
+      if (!isExternalUrl(f.src)) {
+        allowed = true
+      }
+
       if (!allowed) {
         Remove(f)
         Log(`${++frameCount} iframes removed - ${f.src}`)
       }
     })
+  }
+
+  function isExternalUrl(url) {
+    try {
+      const currentOrigin = window.location.origin
+      const urlObj = new URL(url, currentOrigin) // Resolve relative URLs to absolute ones
+      return urlObj.origin !== currentOrigin
+    } catch (e) {
+      console.error(`Invalid URL: ${url}`)
+      return false
+    }
   }
 } catch (err) {
   console.error('US | Error', err)
