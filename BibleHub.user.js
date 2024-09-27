@@ -2,7 +2,7 @@
 // @name         BibleHub
 // @namespace    https://joshr.work/
 // @homepageURL  https://github.com/joshrouwhorst/userscripts/raw/main/BibleHub.user.js
-// @version 1.1.48
+// @version 1.1.49
 // @author       Josh
 // @match        *://*.biblehub.com/*
 // @icon         https://biblehub.com/favicon.ico
@@ -16,6 +16,7 @@ try {
   const { Log, RemoveAds, Remove, $, Load, Loop } = JackKnife
 
   const AD_SELECTORS = []
+  let frameCount = 0
 
   // Checks the src attribute of the iframe to see if it contains a string from the ALLOWED_IFRAMES array
   const ALLOWED_IFRAMES = ['google.com/recaptcha']
@@ -38,7 +39,10 @@ try {
         }
       }
 
-      if (!allowed) Remove(f)
+      if (!allowed) {
+        Remove(f)
+        Log(`${++frameCount} iframes removed - ${f.src}`)
+      }
     })
   }
 } catch (err) {
