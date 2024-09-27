@@ -1,3 +1,13 @@
+const THIS_IS_AN_IFRAME = (function () {
+  try {
+    // Check if the current window is not the top-level window
+    return window.self !== window.top
+  } catch (e) {
+    // If access to `window.top` is denied due to cross-origin restrictions, it's in an iframe
+    return true
+  }
+})()
+
 function jk_DEBUG(name) {
   return window.location.href.indexOf(`debug=${name}`) > -1
 }
@@ -214,7 +224,8 @@ class JackKnifeInstance {
     })
   }
 
-  Load(func) {
+  Load(func, includeIframes) {
+    if (!includeIframes && THIS_IS_AN_IFRAME) return // Block iframes by default
     if (document.readyState !== 'loading') return func()
     document.addEventListener('DOMContentLoaded', func)
   }
