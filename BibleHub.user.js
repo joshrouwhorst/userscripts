@@ -2,7 +2,7 @@
 // @name         BibleHub
 // @namespace    https://joshr.work/
 // @homepageURL  https://github.com/joshrouwhorst/userscripts/raw/main/BibleHub.user.js
-// @version 1.1.58
+// @version 1.2.1
 // @author       Josh
 // @match        *://*.biblehub.com/*
 // @icon         https://biblehub.com/favicon.ico

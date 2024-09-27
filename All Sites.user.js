@@ -2,7 +2,7 @@
 // @name         All Sites
 // @namespace    https://joshr.work/
 // @homepageURL  https://github.com/joshrouwhorst/userscripts/raw/main/All%20Sites.user.js
-// @version 1.1.58
+// @version 1.2.1
 // @author       Josh
 // @match        *://*/*
 // @downloadURL  https://raw.githubusercontent.com/joshrouwhorst/userscripts/main/All%20Sites.user.js
