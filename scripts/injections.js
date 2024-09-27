@@ -2,26 +2,26 @@ const fs = require('fs').promises
 const path = require('path')
 const UglifyJS = require('uglify-js')
 
-const INJECTION_SCRIPTS = [
-  // SET THE FILENAMES TO MINIFY AND CONCATENATE
-  '_JackKnife.js',
-  '_JackKnifeBar.js',
-]
-
 // Define the markers for injected content
 const START_MARKER = '// ==InjectedScriptStart=='
 const END_MARKER = '// ==InjectedScriptEnd=='
 const USERSCRIPT_END_MARKER = '// ==/UserScript=='
 
 // Get the parent directory of the script
-const WORKING_DIR = path.resolve(__dirname, '..')
+const INJECTION_DIR = path.resolve(__dirname, '../injections')
+const WORKING_DIR = path.resolve(__dirname, '../userscripts')
+
+// Grab injection scripts from the injections directory
+async function getInjectionScripts() {
+  return await fs.readdir(INJECTION_DIR)
+}
 
 // Helper function to minify and concatenate files
 async function getMinifiedContent(files) {
   let combinedContent = ''
 
   for (const file of files) {
-    const filePath = path.resolve(WORKING_DIR, file)
+    const filePath = path.resolve(INJECTION_DIR, file)
     try {
       const content = await fs.readFile(filePath, 'utf-8')
       const minified = UglifyJS.minify(content)
@@ -77,18 +77,6 @@ async function injectIntoUserScripts(minifiedContent) {
   }
 }
 
-function updateInjection(
-  scriptContent,
-  minifiedContent,
-  startMarkerIndex,
-  endMarkerIndex
-) {
-  const beforeBlock = scriptContent.slice(0, startMarkerIndex)
-  const afterBlock = scriptContent.slice(endMarkerIndex + END_MARKER.length)
-  const newContent = `${beforeBlock}${START_MARKER}\n${minifiedContent}\n${END_MARKER}${afterBlock}`
-  return newContent
-}
-
 function addInjection(scriptContent, minifiedContent) {
   // Look for the // ==/UserScript== line
   const userScriptEndIndex = scriptContent.indexOf(USERSCRIPT_END_MARKER)
@@ -110,7 +98,8 @@ function addInjection(scriptContent, minifiedContent) {
 
 // Main function to execute the process
 async function main() {
-  const minifiedContent = await getMinifiedContent(INJECTION_SCRIPTS)
+  var injectionScripts = await getInjectionScripts()
+  const minifiedContent = await getMinifiedContent(injectionScripts)
 
   if (minifiedContent) {
     await injectIntoUserScripts(minifiedContent)

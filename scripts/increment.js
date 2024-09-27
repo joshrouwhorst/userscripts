@@ -1,4 +1,7 @@
 const fs = require('fs')
+const path = require('path')
+
+const WORKING_DIR = path.resolve(__dirname, '../userscripts')
 
 // Read package.json
 const packageJson = JSON.parse(fs.readFileSync('package.json'))
@@ -18,7 +21,7 @@ packageJson.version = newVersion
 fs.writeFileSync('package.json', JSON.stringify(packageJson, null, 2))
 
 // Update each .user.js file with the new version in the header
-const files = fs.readdirSync('.')
+const files = fs.readdirSync(WORKING_DIR)
 files.forEach((file) => {
   if (file.endsWith('.user.js')) {
     const content = fs.readFileSync(file, 'utf8')
@@ -26,7 +29,7 @@ files.forEach((file) => {
       /@version\s+\d+(\.\d+)+/,
       `@version ${newVersion}`
     )
-    fs.writeFileSync(file, updatedContent)
+    fs.writeFileSync(path.resolve(WORKING_DIR, file), updatedContent)
     console.log(`Version updated in ${file} to ${newVersion}`)
   }
 })

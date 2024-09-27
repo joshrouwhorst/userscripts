@@ -2,15 +2,16 @@
 
 ## Links
 
-- [All Sites](https://github.com/joshrouwhorst/userscripts/raw/main/All%20Sites.user.js)
-- [Bible Gateway](https://github.com/joshrouwhorst/userscripts/raw/main/Bible%20Gateway.user.js)
-- [IMDB](https://github.com/joshrouwhorst/userscripts/raw/main/IMDB.user.js)
-- [Instagram](https://github.com/joshrouwhorst/userscripts/raw/main/Instagram.user.js)
-- [NYT Crossword](https://github.com/joshrouwhorst/userscripts/raw/main/NYT%20Crossword.user.js)
-- [Reddit](https://github.com/joshrouwhorst/userscripts/raw/main/Reddit.user.js)
-- [StackOverflow](https://github.com/joshrouwhorst/userscripts/raw/main/StackOverflow.user.js)
-- [Wikipedia](https://github.com/joshrouwhorst/userscripts/raw/main/Wikipedia.user.js)
-- [YouTube](https://github.com/joshrouwhorst/userscripts/raw/main/Youtube.user.js)
+- [All Sites](https://github.com/joshrouwhorst/userscripts/raw/main/userscripts/All%20Sites.user.js)
+- [Bible Gateway](https://github.com/joshrouwhorst/userscripts/raw/main/userscripts/Bible%20Gateway.user.js)
+- [BibleHub](https://github.com/joshrouwhorst/userscripts/raw/main/userscripts/BibleHub.user.js)
+- [IMDB](https://github.com/joshrouwhorst/userscripts/raw/main/userscripts/IMDB.user.js)
+- [Instagram](https://github.com/joshrouwhorst/userscripts/raw/main/userscripts/Instagram.user.js)
+- [NYT Crossword](https://github.com/joshrouwhorst/userscripts/raw/main/userscripts/NYT%20Crossword.user.js)
+- [Reddit](https://github.com/joshrouwhorst/userscripts/raw/main/userscripts/Reddit.user.js)
+- [StackOverflow](https://github.com/joshrouwhorst/userscripts/raw/main/userscripts/StackOverflow.user.js)
+- [Wikipedia](https://github.com/joshrouwhorst/userscripts/raw/main/userscripts/Wikipedia.user.js)
+- [YouTube](https://github.com/joshrouwhorst/userscripts/raw/main/userscripts/Youtube.user.js)
 
 ## Debugging
 
