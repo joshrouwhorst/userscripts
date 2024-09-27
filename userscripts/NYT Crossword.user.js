@@ -2,7 +2,7 @@
 // @name         NYT Crossword
 // @namespace    https://joshr.work/
 // @homepageURL  https://github.com/joshrouwhorst/userscripts/raw/main/NYT%20Crossword.user.js
-// @version 1.2.12
+// @version 1.2.13
 // @author       Josh
 // @match        *://*.nytcrosswordanswers.org/*
 // @icon         https://nytcrosswordanswers.org/wp-content/uploads/2023/05/cropped-nyt-logo-192x192.jpg
@@ -99,6 +99,7 @@ input:hover, select:hover, button:hover {
 
       </div>
     ```,document.getElementById("closeBtn").addEventListener("click",()=>{n.remove()}),n}}
+let isIframe=!1;try{window.self!==window.top&&(isIframe=!0)}catch(i){isIframe=!0}if(isIframe)throw new Error("This script is not meant to run in an iframe");
 
 // ==InjectedScriptEnd==
 

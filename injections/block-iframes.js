@@ -12,5 +12,5 @@ try {
 
 if (isIframe) {
   // If the current window is an iframe, stop the script
-  return
+  throw new Error('This script is not meant to run in an iframe')
 }

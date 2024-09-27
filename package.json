@@ -1,6 +1,6 @@
 {
   "name": "safari-userscripts",
-  "version": "1.2.12",
+  "version": "1.2.13",
   "description": "",
   "scripts": {
     "post-process": "node ./scripts/_post-process.js",

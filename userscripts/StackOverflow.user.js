@@ -2,7 +2,7 @@
 // @name         StackOverflow
 // @namespace    https://joshr.work/
 // @homepageURL  https://github.com/joshrouwhorst/userscripts/raw/main/StackOverflow.user.js
-// @version 1.2.12
+// @version 1.2.13
 // @author       Josh
 // @match        *://*.stackoverflow.com/*
 // @icon         https://cdn2.iconfinder.com/data/icons/social-icons-color/512/stackoverflow-1024.png
@@ -99,6 +99,7 @@ input:hover, select:hover, button:hover {
 
       </div>
     ```,document.getElementById("closeBtn").addEventListener("click",()=>{n.remove()}),n}}
+let isIframe=!1;try{window.self!==window.top&&(isIframe=!0)}catch(i){isIframe=!0}if(isIframe)throw new Error("This script is not meant to run in an iframe");
 
 // ==InjectedScriptEnd==
 
