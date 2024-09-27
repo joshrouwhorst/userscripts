@@ -2,7 +2,7 @@
 // @name         BibleHub
 // @namespace    https://joshr.work/
 // @homepageURL  https://github.com/joshrouwhorst/userscripts/raw/main/BibleHub.user.js
-// @version 1.2.14
+// @version 1.2.15
 // @author       Josh
 // @match        *://*.biblehub.com/*
 // @icon         https://biblehub.com/favicon.ico
@@ -126,7 +126,7 @@ try {
       var allowed = false
 
       for (var i = 0; i < ALLOWED_IFRAMES.length; i++) {
-        if (f.src.indexOf(ALLOWED_IFRAMES[i])) {
+        if (f.src.indexOf(ALLOWED_IFRAMES[i]) > -1) {
           allowed = true
           break
         }

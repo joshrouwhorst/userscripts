@@ -32,7 +32,7 @@ try {
       var allowed = false
 
       for (var i = 0; i < ALLOWED_IFRAMES.length; i++) {
-        if (f.src.indexOf(ALLOWED_IFRAMES[i])) {
+        if (f.src.indexOf(ALLOWED_IFRAMES[i]) > -1) {
           allowed = true
           break
         }
