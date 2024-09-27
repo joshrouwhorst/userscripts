@@ -1,6 +1,6 @@
 {
   "name": "safari-userscripts",
-  "version": "1.1.56",
+  "version": "1.1.58",
   "description": "",
   "scripts": {
     "clean-injections": "node ./scripts/clean-injections.js",

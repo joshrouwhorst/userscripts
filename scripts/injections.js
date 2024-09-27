@@ -62,19 +62,11 @@ async function injectIntoUserScripts(minifiedContent) {
         newContent = updateInjection(
           scriptContent,
           minifiedContent,
-          START_MARKER,
-          END_MARKER,
           startMarkerIndex,
           endMarkerIndex
         )
       } else {
-        newContent = addInjection(
-          scriptContent,
-          minifiedContent,
-          USERSCRIPT_END_MARKER,
-          START_MARKER,
-          END_MARKER
-        )
+        newContent = addInjection(scriptContent, minifiedContent)
       }
 
       await fs.writeFile(userScriptPath, newContent, 'utf-8')
@@ -85,7 +77,12 @@ async function injectIntoUserScripts(minifiedContent) {
   }
 }
 
-function updateInjection(scriptContent, minifiedContent) {
+function updateInjection(
+  scriptContent,
+  minifiedContent,
+  startMarkerIndex,
+  endMarkerIndex
+) {
   const beforeBlock = scriptContent.slice(0, startMarkerIndex)
   const afterBlock = scriptContent.slice(endMarkerIndex + END_MARKER.length)
   const newContent = `${beforeBlock}${START_MARKER}\n${minifiedContent}\n${END_MARKER}${afterBlock}`
