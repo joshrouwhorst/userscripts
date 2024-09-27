@@ -2,7 +2,7 @@
 // @name         Instagram
 // @namespace    https://joshr.work/
 // @homepageURL  https://github.com/joshrouwhorst/userscripts/raw/main/Instagram.user.js
-// @version 1.2.15
+// @version 1.2.16
 // @author       Josh
 // @match        *://*.instagram.com/*
 // @icon         https://logos-world.net/wp-content/uploads/2020/06/Instagram-Logo.png
