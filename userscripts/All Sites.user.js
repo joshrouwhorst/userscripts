@@ -2,7 +2,7 @@
 // @name         All Sites
 // @namespace    https://joshr.work/
 // @homepageURL  https://github.com/joshrouwhorst/userscripts/raw/main/All%20Sites.user.js
-// @version 1.2.11
+// @version 1.2.12
 // @author       Josh
 // @match        *://*/*
 // @downloadURL  https://raw.githubusercontent.com/joshrouwhorst/userscripts/main/userscripts/All%20Sites.user.js
@@ -119,7 +119,6 @@ const { Log, HasParam, $, Remove, Load } = JackKnife
 const { AddButton } = JackKnifeBar
 
 Load(() => {
-  if (isInIframe()) return
   handleAutoReload()
   addBar()
   removeCookieBanners()
@@ -134,16 +133,6 @@ function reminders() {
     '- Add `jkbar=true` to the URL to show the JackKnife bar or `jkbar=false` to hide'
   )
   Log('- Add `show.banners=true` to the URL to show cookie banners')
-}
-
-function isInIframe() {
-  try {
-    // Check if the current window is not the top-level window
-    return window.self !== window.top
-  } catch (e) {
-    // If access to `window.top` is denied due to cross-origin restrictions, it's in an iframe
-    return true
-  }
 }
 
 function addBar() {

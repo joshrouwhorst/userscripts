@@ -25,7 +25,6 @@ const { Log, HasParam, $, Remove, Load } = JackKnife
 const { AddButton } = JackKnifeBar
 
 Load(() => {
-  if (isInIframe()) return
   handleAutoReload()
   addBar()
   removeCookieBanners()
@@ -40,16 +39,6 @@ function reminders() {
     '- Add `jkbar=true` to the URL to show the JackKnife bar or `jkbar=false` to hide'
   )
   Log('- Add `show.banners=true` to the URL to show cookie banners')
-}
-
-function isInIframe() {
-  try {
-    // Check if the current window is not the top-level window
-    return window.self !== window.top
-  } catch (e) {
-    // If access to `window.top` is denied due to cross-origin restrictions, it's in an iframe
-    return true
-  }
 }
 
 function addBar() {
