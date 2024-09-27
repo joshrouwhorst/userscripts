@@ -1,12 +1,16 @@
 {
   "name": "safari-userscripts",
-  "version": "1.1.49",
+  "version": "1.1.55",
   "description": "",
   "scripts": {
-    "set-version": "node ./scripts/increment.js",
-    "push": "npm run set-version && git add -A && git commit -m 'update' && git push"
+    "clean-injections": "node ./scripts/clean-injections.js",
+    "post-process": "node ./scripts/post-process.js",
+    "push": "npm run post-process && git add -A && git commit -m 'update' && git push"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "uglify-js": "^3.19.3"
+  }
 }
