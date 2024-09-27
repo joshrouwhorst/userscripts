@@ -23,7 +23,7 @@ class JackKnifeInstance {
   Loop(interval, func) {
     // Return false to stop the loop
     var keepGoing = func() || true // Default to true
-    if (keepGoing) setTimeout(() => this.Loop(interval, func), interval)
+    if (keepGoing) setTimeout(() => JackKnife.Loop(interval, func), interval)
   }
 
   Memory(key, value) {
