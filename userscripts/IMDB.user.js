@@ -2,7 +2,7 @@
 // @name         IMDB
 // @namespace    https://joshr.work/
 // @homepageURL  https://github.com/joshrouwhorst/userscripts/raw/main/IMDB.user.js
-// @version 1.2.20
+// @version 1.2.21
 // @author       Josh
 // @match        *://*.imdb.com/*
 // @icon         https://m.media-amazon.com/images/G/01/imdb/images-ANDW73HA/favicon_iPhone_retina_180x180._CB1582158069_.png
@@ -106,7 +106,7 @@ input:hover, select:hover, button:hover {
 
 if (jk_DEBUG('imdb')) debugger
 
-const { Log, Obj, OnLocationChange, RemoveAds, HideAds, Censor, Load } =
+const { Log, Obj, OnLocationChange, RemoveAds, HideAds, Censor, Load, Loop } =
   JackKnife
 const LOOP_TIME = 500
 
@@ -117,13 +117,14 @@ Load(() => {
 function run() {
   Log('IMDB User Script Running...')
 
-  Censor(['.ipc-promptable-dialog'])
-
-  Censor([
-    '[aria-label="Sponsored Content"]',
-    '.nas-slot',
-    '[data-testid="episodes-cards-container"]',
-  ])
+  Loop(2000, () => {
+    Censor([
+      '.ipc-promptable-dialog',
+      '[aria-label="Sponsored Content"]',
+      '.nas-slot',
+      '[data-testid="episodes-cards-container"]',
+    ])
+  })
 
   // RemoveAds(['.ipc-promptable-dialog'])
 

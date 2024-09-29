@@ -1,6 +1,6 @@
 {
   "name": "safari-userscripts",
-  "version": "1.2.20",
+  "version": "1.2.21",
   "description": "",
   "scripts": {
     "version:show": "node -p \"require('./package.json').version\"",
