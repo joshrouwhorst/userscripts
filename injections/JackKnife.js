@@ -140,6 +140,42 @@ class JackKnifeInstance {
     })
   }
 
+  Censor(selectors) {
+    selectors.forEach((selector) => {
+      const elements = document.querySelectorAll(selector)
+
+      elements.forEach((element) => {
+        // Check if the element already has a black box (using a unique marker class)
+        if (!element.querySelector('.black-box-overlay')) {
+          // Create a black box div
+          const blackBox = document.createElement('div')
+
+          // Set the black box styles
+          blackBox.style.position = 'absolute'
+          blackBox.style.top = 0
+          blackBox.style.left = 0
+          blackBox.style.width = '100%'
+          blackBox.style.height = '100%'
+          blackBox.style.backgroundColor = 'black'
+          blackBox.style.zIndex = 9999
+          blackBox.style.pointerEvents = 'none' // Allow click-through
+
+          // Add a unique marker class to track the black box
+          blackBox.classList.add('black-box-overlay')
+
+          // Make sure the parent element has position relative for overlay
+          const computedStyle = window.getComputedStyle(element)
+          if (computedStyle.position === 'static') {
+            element.style.position = 'relative'
+          }
+
+          // Append the black box to the element
+          element.appendChild(blackBox)
+        }
+      })
+    })
+  }
+
   MakeElement(html) {
     // Takes string of HTML and returns a DOM element
     const temp = document.createElement('div')

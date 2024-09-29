@@ -12,7 +12,8 @@
 
 if (jk_DEBUG('imdb')) debugger
 
-const { Log, Obj, OnLocationChange, RemoveAds, HideAds, Load } = JackKnife
+const { Log, Obj, OnLocationChange, RemoveAds, HideAds, Censor, Load } =
+  JackKnife
 const LOOP_TIME = 500
 
 Load(() => {
@@ -22,11 +23,19 @@ Load(() => {
 function run() {
   Log('IMDB User Script Running...')
 
-  RemoveAds(['.ipc-promptable-dialog'])
+  Censor(['.ipc-promptable-dialog'])
 
-  HideAds([
+  Censor([
     '[aria-label="Sponsored Content"]',
     '.nas-slot',
     '[data-testid="episodes-cards-container"]',
   ])
+
+  // RemoveAds(['.ipc-promptable-dialog'])
+
+  // HideAds([
+  //   '[aria-label="Sponsored Content"]',
+  //   '.nas-slot',
+  //   '[data-testid="episodes-cards-container"]',
+  // ])
 }
